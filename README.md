@@ -8,6 +8,12 @@ This example shows you how to deploy a token and then a crowdsale contract that 
 
 ***
 
+## :page_with_curl:  _Run the example_
+
+<!-- TODO: Mention the need for an infura API key and the .env file! -->
+
+***
+
 ## :page_with_curl:  _Test Instructions_
 
 In order to run the tests you will need the __`ethereum-bridge`__ to provide a way for the Provable service to listen to events from your smart-contract.
