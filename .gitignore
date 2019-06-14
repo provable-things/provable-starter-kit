@@ -1,4 +1,5 @@
 /build/
 */.sw*
 *.log
+*.node*
 
