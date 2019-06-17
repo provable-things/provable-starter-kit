@@ -67,7 +67,6 @@ module.exports = {
     'no-throw-literal': 2,
     'no-unmodified-loop-condition': 1,
     'no-useless-call': 1,
-    'no-useless-catch': 1,
     'no-useless-concat': 2,
     'no-useless-escape': 2,
     'no-useless-return': 0,
