@@ -20,7 +20,7 @@ contract SimpleCrowdsale is IERC20 {
         uint256 amount
     );
 
-    function initializeCrowdsale(
+    function initCrowdsale(
         IERC20 _token,
         uint256 _ethPriceCents
     )
