@@ -82,6 +82,46 @@ contract('❍ Provable Zeppelin Example', ([
       provableZeppelinMethods = methods
     })
 
+    it('Should initialize the crowdsale contract', async () => {
+      await provableZeppelinMethods
+        .initialize(tokenAddress)
+        .send({
+          from: _owner,
+          gas: gasAmount
+        })
+    })
+
+    it('Should not be able to initialize the crowdsale contract > once', async () => {
+      await shouldRevert(
+        provableZeppelinMethods
+          .initialize(tokenAddress)
+          .send({
+            from: _owner,
+            gas: gasAmount
+          })
+      )
+    })
+
+    it('Should have set the owner address correctly', async () => {
+      const contractOwner = await provableZeppelinMethods
+        .owner()
+        .call()
+      assert.strictEqual(
+        _owner.toLowerCase(),
+        contractOwner.toLowerCase()
+      )
+    })
+
+    it('Should have set the token address correctly', async () => {
+      const contractTokenAddress = await provableZeppelinMethods
+        .token()
+        .call()
+      assert.strictEqual(
+        tokenAddress.toLowerCase(),
+        contractTokenAddress.toLowerCase()
+      )
+    })
+
     it('Owner can\'t init crowdsale before getting ETH price', async () => {
       await shouldRevert(
         provableZeppelinMethods
