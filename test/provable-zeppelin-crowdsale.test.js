@@ -35,16 +35,42 @@ contract('❍ Provable Zeppelin Example', ([
 
     it('Should deploy a token', async () => {
       const deployedToken = await TokenContract
-        .new(
-          tokenName,
-          tokenSymbol,
-          tokenDecimals,
-          initialTokenSupply,
-          { from: _owner }
-        )
+        .new()
       const tokenContract = deployedToken.contract
       tokenAddress = tokenContract._address
       tokenMethods = tokenContract.methods
+    })
+
+    it('Should initialize the token contract', async () => {
+      await tokenMethods
+        .initialize(
+          tokenName,
+          tokenSymbol,
+          tokenDecimals,
+          initialTokenSupply
+        )
+        .send({
+          from: _owner,
+          gas: gasAmount
+
+        })
+    })
+
+    it('Should not be able to reinitialize token contract', async () => {
+      await shouldRevert(
+        tokenMethods
+          .initialize(
+            tokenName,
+            tokenSymbol,
+            tokenDecimals,
+            initialTokenSupply
+          )
+          .send({
+            from: _owner,
+            gas: gasAmount
+
+          })
+      )
     })
 
     it('Should deploy the Provable Zeppelin Crowdsale Contract', async () => {
