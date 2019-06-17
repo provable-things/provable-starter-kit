@@ -2,18 +2,20 @@ pragma solidity 0.5.0;
 
 import './Provable.sol';
 import './SimpleCrowdsale.sol';
+import "zos-lib/contracts/Initializable.sol";
 import '../node_modules/openzeppelin-solidity/contracts/token/ERC20/ERC20.sol';
 
-contract ProvableZeppelinCrowdsale is usingOraclize, SimpleCrowdsale, ERC20 {
+contract ProvableZeppelinCrowdsale is usingOraclize, SimpleCrowdsale, ERC20, Initializable {
 
-    ERC20 token;
+    ERC20 public token;
     address public owner;
     uint256 public ethPriceInCents;
     event LogEthPriceInCents(uint256 _ethPriceInCents);
 
-    constructor(
+    function initialize(
         ERC20 _token
     )
+        initializer
         public
     {
         token = _token;
