@@ -10,6 +10,7 @@ contract('❍ Provable Zeppelin Example', ([
   _,
   _owner,
   _tokenBuyer,
+  _nonOwner,
   ...otherAccounts
 ]) => {
   describe('❍ Crowdsale Tests', () => {
@@ -81,21 +82,81 @@ contract('❍ Provable Zeppelin Example', ([
       provableZeppelinMethods = methods
     })
 
-    it('Should get ETH price in USD', async () => {
+    it('Owner can\'t init crowdsale before getting ETH price', async () => {
+      await shouldRevert(
+        provableZeppelinMethods
+          .initializeCrowdsale()
+          .send({
+            from: _owner,
+            gas: gasAmount
+          })
+      )
+    })
+
+    it('Non-owner can\'t get eth prices via Provable', async () => {
+      await shouldRevert(
+        provableZeppelinMethods
+          .getEthPriceViaProvable()
+          .send({
+            gas: gasAmount,
+            from: _nonOwner
+          })
+      )
+    })
+
+    it('Should get ETH price in cents', async () => {
       await provableZeppelinMethods
-        .getEthPriceInUSDViaProvable()
+        .getEthPriceViaProvable()
         .send({
           from: _owner,
           gas: gasAmount
         })
       const {
-        returnValues: { _ethPriceInUSD }
-      } = await waitForEvent(provableZeppelinEvents.ethPriceInUSD)
-      ethPriceInCents = parseInt(_ethPriceInUSD.replace('.', '').slice(0, -3))
-      assert.isTrue(parseInt(_ethPriceInUSD) > 0)
+        returnValues: { _ethPriceInCents }
+      } = await waitForEvent(provableZeppelinEvents.LogEthPriceInCents)
+      ethPriceInCents = parseInt(_ethPriceInCents)
+      assert.isTrue(ethPriceInCents > 0)
     })
 
-    it('Should have initialized the crowdsale after getting ETH price', async () => {
+    it('Should have stored ETH price in cents in contract', async () => {
+      const contractEthPriceIncents = await provableZeppelinMethods
+        .ethPriceInCents()
+        .call()
+      assert.strictEqual(
+        parseInt(contractEthPriceIncents),
+        ethPriceInCents
+      )
+    })
+
+    it('Non-owner can\'t init crowdsale even if ETH price retrieved', async () => {
+      assert.isTrue(_owner.toLowerCase() !== _nonOwner.toLowerCase())
+      await shouldRevert(
+        provableZeppelinMethods
+          .initializeCrowdsale()
+          .send({
+            from: _nonOwner,
+            gas: gasAmount
+          })
+      )
+    })
+
+    it('Crowdsale should not yet be initialized', async () => {
+      const crowdsaleInitialized = await provableZeppelinMethods
+        .crowdsaleInitialized()
+        .call()
+      assert.isFalse(crowdsaleInitialized)
+    })
+
+    it('Should successfully init crowdsale', async () => {
+      await provableZeppelinMethods
+        .initializeCrowdsale()
+        .send({
+          from: _owner,
+          gas: gasAmount
+        })
+    })
+
+    it('Crowdsale should now be initialized', async () => {
       const crowdsaleInitialized = await provableZeppelinMethods
         .crowdsaleInitialized()
         .call()
