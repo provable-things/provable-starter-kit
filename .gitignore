@@ -1,8 +1,7 @@
 /build/
 /node_modules/
-*/.sw*
+*.sw*
 *.log
 *.node*
 *.env
-
 .zos.session
