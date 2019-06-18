@@ -1,25 +1,47 @@
 pragma solidity 0.5.0;
 
 import './Provable.sol';
-import './SimpleCrowdsale.sol';
 import "zos-lib/contracts/Initializable.sol";
-import '../node_modules/openzeppelin-solidity/contracts/token/ERC20/ERC20.sol';
 
-contract ProvableZeppelinCrowdsale is usingOraclize, SimpleCrowdsale, ERC20, Initializable {
+interface SimpleTokenInterface {
 
-    ERC20 public token;
+    function transfer(
+        address _to,
+        uint256 _numberOfTokens
+    )
+        external
+        returns (bool _success);
+
+}
+
+contract ProvableZeppelinCrowdsale is usingOraclize, Initializable {
+
     address public owner;
+    address public tokenAddress;
+    uint256 public totalWeiRaised;
     uint256 public ethPriceInCents;
-    event LogEthPriceInCents(uint256 _ethPriceInCents);
+    bool public crowdsaleInitialized;
+    address public simpleTokenAddress;
+    uint256 public pricePerTokenInWei;
+
+    event LogEthPriceInCents(
+        uint256 _ethPriceInCents
+    );
+
+    event TokensPurchased(
+        address indexed purchaser,
+        uint256 value,
+        uint256 amount
+    );
 
     function initialize(
-        ERC20 _token
+        address _tokenAddress
     )
         initializer
         public
     {
-        token = _token;
         owner = msg.sender;
+        tokenAddress = _tokenAddress;
     }
 
     function getEthPriceViaProvable()
@@ -41,6 +63,7 @@ contract ProvableZeppelinCrowdsale is usingOraclize, SimpleCrowdsale, ERC20, Ini
     {
         require(msg.sender == oraclize_cbAddress());
         ethPriceInCents = parseInt(_result, 2);
+        pricePerTokenInWei = calculatePricePerTokenInWei(ethPriceInCents);
         emit LogEthPriceInCents(ethPriceInCents);
     }
 
@@ -48,12 +71,90 @@ contract ProvableZeppelinCrowdsale is usingOraclize, SimpleCrowdsale, ERC20, Ini
         public
     {
         require(
-            ethPriceInCents > 0 &&
-            msg.sender == owner
+            msg.sender == owner &&
+            !crowdsaleInitialized &&
+            pricePerTokenInWei > 0 &&
+            tokenAddress != address(0)
         );
-        initCrowdsale(
-            token,
-            ethPriceInCents
+        simpleTokenAddress = tokenAddress;
+        crowdsaleInitialized = true;
+    }
+
+    function buyTokens()
+        public
+        payable
+    {
+        require(
+            crowdsaleInitialized &&
+            meetsMinimumPurchaseThreshold(msg.value)
         );
+        uint256 numberOfTokens = calculateTokenAmount(msg.value);
+        uint256 refundAmountInWei = calculateRefundAmountInWei(numberOfTokens);
+        if (refundAmountInWei > 0) {
+            msg.sender.transfer(refundAmountInWei);
+            totalWeiRaised = totalWeiRaised + (msg.value - refundAmountInWei);
+        } else {
+            totalWeiRaised = totalWeiRaised + msg.value;
+        }
+        transferTokensToBuyer(numberOfTokens);
+        emit TokensPurchased(
+            msg.sender,
+            msg.value,
+            numberOfTokens
+        );
+    }
+
+    function calculateRefundAmountInWei(
+        uint256 _numberTokensPurchased
+    )
+        internal
+        view
+        returns (uint256 _refundAmount)
+    {
+        return msg.value - (_numberTokensPurchased * pricePerTokenInWei);
+
+    }
+
+    function meetsMinimumPurchaseThreshold(
+        uint256 _weiAmount
+    )
+        public
+        view
+        returns(bool _meetsMinimumPurchaseThreshold)
+    {
+        return _weiAmount >= pricePerTokenInWei;
+    }
+
+    function calculateTokenAmount(
+        uint256 _weiAmount
+    )
+        internal
+        view
+        returns (uint256)
+    {
+        return _weiAmount / pricePerTokenInWei;
+    }
+
+    function transferTokensToBuyer(
+        uint256 _numberTokensPurchased
+    )
+        internal
+    {
+        SimpleTokenInterface(simpleTokenAddress)
+            .transfer(
+                msg.sender,
+                _numberTokensPurchased
+            );
+    }
+
+    function calculatePricePerTokenInWei(
+        uint256 _ethPriceInCents
+    )
+        public
+        pure
+        returns(uint256 _pricePerTokenInWei)
+    {
+        uint256 numerator = 1 * 10 ** 20;
+        return numerator / _ethPriceInCents;
     }
 }
