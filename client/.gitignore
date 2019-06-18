@@ -9,3 +9,4 @@
 .env.test.local
 .env.production.local
 *log*
+.zos.session

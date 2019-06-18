@@ -5,3 +5,5 @@
 *.node*
 *.env
 .zos.session
+zos.json
+zos.dev*.json
