@@ -1,6 +1,6 @@
 const Web3 = require('web3')
 const { waitForEvent } = require('./utils')
-const TokenContract = artifacts.require('Token.sol')
+const SimpleTokenContract = artifacts.require('SimpleToken.sol')
 const shouldFail = require('openzeppelin-test-helpers/src/shouldFail')
 const ProvableZeppelinCrowdsale = artifacts.require('ProvableZeppelinCrowdsale.sol')
 const web3WithWebSockets = new Web3(new Web3.providers.WebsocketProvider('ws://localhost:9545'))
@@ -26,15 +26,15 @@ contract('❍ Provable Zeppelin Example', ([
     const gasAmount = 1e6
     const gasPrice = 20e9
     const tokenDecimals = 0
+    const totalSupply = 1e6
     const tokenSymbol = 'PVT'
-    const initialTokenSupply = 1e6
     const tokenName = 'ProvableZeppelinToken'
 
     const shouldRevert = _method =>
       shouldFail.reverting(_method)
 
     it('Should deploy a token', async () => {
-      const deployedToken = await TokenContract
+      const deployedToken = await SimpleTokenContract
         .new()
       const tokenContract = deployedToken.contract
       tokenAddress = tokenContract._address
@@ -47,7 +47,7 @@ contract('❍ Provable Zeppelin Example', ([
           tokenName,
           tokenSymbol,
           tokenDecimals,
-          initialTokenSupply
+          totalSupply
         )
         .send({
           from: _owner,
@@ -63,7 +63,7 @@ contract('❍ Provable Zeppelin Example', ([
             tokenName,
             tokenSymbol,
             tokenDecimals,
-            initialTokenSupply
+            totalSupply
           )
           .send({
             from: _owner,
@@ -84,7 +84,7 @@ contract('❍ Provable Zeppelin Example', ([
       await tokenMethods
         .transfer(
           provableZeppelinAddress,
-          initialTokenSupply
+          totalSupply
         )
         .send({
           from: _owner,
@@ -95,7 +95,7 @@ contract('❍ Provable Zeppelin Example', ([
         .call()
       assert.strictEqual(
         parseInt(contractTokenBalance),
-        initialTokenSupply
+        totalSupply
       )
     })
 
