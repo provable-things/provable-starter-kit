@@ -140,7 +140,7 @@ contract('❍ Provable Zeppelin Example', ([
 
     it('Should have set the token address correctly', async () => {
       const contractTokenAddress = await provableZeppelinMethods
-        .token()
+        .tokenAddress()
         .call()
       assert.strictEqual(
         tokenAddress.toLowerCase(),
