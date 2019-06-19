@@ -1,6 +1,6 @@
 import React from 'react'
-import styles from '../App.module.scss'
-import Instructions from './Instructions/index'
+import styles from '../../App.module.scss'
+import Instructions from '../Instructions/index'
 
 export default _props =>
   (

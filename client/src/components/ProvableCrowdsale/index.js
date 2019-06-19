@@ -1,10 +1,9 @@
 import React from 'react'
-import Web3Info from './Web3Info/index'
-import CounterUI from './Counter/index'
-import styles from '../App.module.scss'
-import DeployCheck from './deploy-check'
-import StyledLoader from './styled-loader'
-import Instructions from './Instructions/index'
+import Web3Info from '../Web3Info/index'
+import styles from '../../App.module.scss'
+import DeployCheck from '../DeployCheck/index'
+import StyledLoader from '../StyledLoader/index'
+import Instructions from '../Instructions/index'
 
 export default _props => {
   const { hotLoaderDisabled, networkType, accounts, ganacheAccounts } = _props
@@ -13,40 +12,39 @@ export default _props => {
     : "upgrade"
   return (
     <div className={styles.wrapper}>
-      {!this.state.web3 && <StyledLoader />}
+      {!_props.web3 && <StyledLoader />}
       {
-        this.state.web3 &&
-        !this.state.contract &&
+        _props.web3 &&
+        !_props.contract &&
          <DeployCheck
           name='provable'
-          accounts={this.state.accounts}
-          ganacheAccounts={this.state.ganacheAccounts}
+          accounts={_props.accounts}
+          ganacheAccounts={_props.ganacheAccounts}
         />
       }
-      {this.state.web3 && this.state.contract && (
+      {_props.web3 && _props.contract && (
         <div className={styles.contracts}>
           <h1>Counter Contract is good to Go!</h1>
           <p>Interact with your contract on the right.</p>
           <p> You can see your account info on the left </p>
           <div className={styles.widgets}>
-            <Web3Info {...this.state} />
-            <CounterUI
-              decrease={this.decreaseCount}
-              increase={this.increaseCount}
-              {...this.state} />
+            <Web3Info { ..._props } />
+
+            {/* <!--The counter stuff goes here --> */}
+
           </div>
-          {this.state.balance < 0.1 && (
+          {_props.balance < 0.1 &&
             <Instructions
               ganacheAccounts={ganacheAccounts}
               name="metamask"
               accounts={accounts} />
-          )}
-          {this.state.balance >= 0.1 && (
+          }
+          {_props.balance >= 0.1 &&
             <Instructions
-              ganacheAccounts={this.state.ganacheAccounts}
+              ganacheAccounts={_props.ganacheAccounts}
               name={updgradeCommand}
               accounts={accounts} />
-          )}
+          }
         </div>
       )}
     </div>

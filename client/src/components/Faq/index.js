@@ -1,7 +1,7 @@
 import React from 'react'
-import Hero from "./Hero/index.js"
-import styles from '../App.module.scss'
-import Instructions from './Instructions/index'
+import Hero from "../Hero/index.js"
+import styles from '../../App.module.scss'
+import Instructions from '../Instructions/index'
 
 export default _props =>
   (

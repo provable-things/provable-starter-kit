@@ -1,10 +1,10 @@
 import React from 'react'
-import Wallet from './Wallet/index.js'
-import styles from '../App.module.scss'
-import DeployCheck from './deploy-check'
-import StyledLoader from './styled-loader'
-import Web3Info from './Web3Info/index.js'
-import Instructions from './Instructions/index'
+import Wallet from '../Wallet/index'
+import Web3Info from '../Web3Info/index'
+import styles from '../../App.module.scss'
+import DeployCheck from '../DeployCheck/index'
+import StyledLoader from '../StyledLoader/index'
+import Instructions from '../Instructions/index'
 
 export default _props =>
   (

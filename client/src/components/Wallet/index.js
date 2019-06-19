@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import { PublicAddress, Button } from 'rimble-ui';
-import styles from './Wallet.module.scss';
+import React, { Component } from "react"
+import { PublicAddress, Button } from 'rimble-ui'
+import styles from './Wallet.module.scss'
 
 export default class Wallet extends Component {
 

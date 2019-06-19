@@ -1,17 +1,13 @@
-import React from "react"
-import FAQ from './components/faq'
-import EVM from './components/evm'
+import React from 'react'
+import FAQ from './components/Faq/index'
+import EVM from './components/Evm/index'
 import styles from './App.module.scss'
-import Header from "./components/Header/index.js"
-import Footer from "./components/Footer/index.js"
-import Wallet from "./components/Wallet/index.js"
-import CounterUI from "./components/Counter/index.js"
-import DeployCheck from './components/deploy-check'
-import StyledLoader from './components/styled-loader'
-import Web3Info from "./components/Web3Info/index.js"
-import { getWeb3, getGanacheWeb3 }  from "./utils/getWeb3"
-import Instructions from "./components/Instructions/index.js"
-import ProvableCrowdsale from './components/provable-crowdsale'
+import Header from './components/Header/index'
+import Footer from './components/Footer/index'
+import Wallet from './components/Wallet/index'
+import { getWeb3, getGanacheWeb3 }  from './utils/getWeb3'
+import Instructions from './components/Instructions/index'
+import Provable from './components/ProvableCrowdsale/index'
 import { zeppelinSolidityHotLoaderOptions } from '../config/webpack'
 
 export default class App extends React.Component {
@@ -21,7 +17,7 @@ export default class App extends React.Component {
     accounts: null,
     contract: null,
     storageValue: 0,
-    route: window.location.pathname.replace("/", "")
+    route: window.location.pathname.replace('/', '')
   }
 
   getGanacheAddresses = async _ =>
@@ -167,78 +163,14 @@ export default class App extends React.Component {
     this.updateTokenOwner();
   };
 
-
-
-  renderBody = _ => {
-    const { hotLoaderDisabled, networkType, accounts, ganacheAccounts } = this.state;
-    const updgradeCommand = (networkType === 'private' && !hotLoaderDisabled) ? "upgrade-auto" : "upgrade";
-    return (
-      <div className={styles.wrapper}>
-        {!this.state.web3 && <StyledLoader />}
-        {
-          this.state.web3 &&
-          !this.state.contract &&
-          <DeployCheck
-            name='counter'
-            accounts={this.state.accounts}
-            ganacheAccounts={this.state.ganacheAccounts}
-          />
-        }
-        {this.state.web3 && this.state.contract && (
-          <div className={styles.contracts}>
-            <h1>Counter Contract is good to Go!</h1>
-            <p>Interact with your contract on the right.</p>
-            <p> You can see your account info on the left </p>
-            <div className={styles.widgets}>
-              <Web3Info {...this.state} />
-              <CounterUI
-                decrease={this.decreaseCount}
-                increase={this.increaseCount}
-                {...this.state} />
-            </div>
-            {this.state.balance < 0.1 && (
-              <Instructions
-                ganacheAccounts={ganacheAccounts}
-                name="metamask"
-                accounts={accounts} />
-            )}
-            {this.state.balance >= 0.1 && (
-              <Instructions
-                ganacheAccounts={this.state.ganacheAccounts}
-                name={updgradeCommand}
-                accounts={accounts} />
-            )}
-          </div>
-        )}
-      </div>
-    );
-  }
-
   render = _ =>
     (
       <div className={styles.App}>
         <Header />
-          {
-            this.state.route === '' &&
-            <Instructions
-              name="setup"
-              accounts={this.state.accounts}
-              ganacheAccounts={this.state.ganacheAccounts}
-            />
-          }
-          {
-            this.state.route === 'faq' &&
-            <FAQ
-              name="faq"
-              accounts={this.state.accounts}
-              ganacheAccounts={this.state.ganacheAccounts}
-            />
-          }
-
-          { this.state.route === 'evm' && <EVM {...this.state} /> }
-
-          { this.state.route === 'provable' && <ProvableCrowdsale {...this.state } /> }
-
+          { this.state.route === 'evm' && <EVM name='evm' {...this.state} /> }
+          { this.state.route === 'faq' && <FAQ name='faq' { ...this.state } /> }
+          { this.state.route === '' && <Instructions name='setup' { ... this.state } /> }
+          { this.state.route === 'provable' && <Provable name='provable' {...this.state } /> }
         <Footer />
       </div>
     )

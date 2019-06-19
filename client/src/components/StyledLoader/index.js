@@ -1,6 +1,6 @@
 import React from 'react'
 import { Loader } from 'rimble-ui'
-import styles from '../App.module.scss'
+import styles from '../../App.module.scss'
 
 export default _ =>
   (
