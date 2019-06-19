@@ -300,20 +300,27 @@ export default class App extends React.Component {
         </div>
       )}
       </div>
-    );
-  }
+  )
 
-  render() {
-    return (
+
+  render = _ =>
+    (
       <div className={styles.App}>
         <Header />
+          {
+            this.state.route === 'faq' &&
+            <FAQ
+              name="faq"
+              accounts={this.state.accounts}
+              ganacheAccounts={this.state.ganacheAccounts}
+            />
+          }
+
           { this.state.route === 'evm' && this.renderEVM() }
-          { this.state.route === 'faq' && this.renderFAQ() }
-          { this.state.route === 'counter' && this.renderBody() }
           { this.state.route === '' && this.renderInstructions() }
           { this.state.route === 'provable' && this.renderProvable() }
+
         <Footer />
       </div>
     )
-  }
 }
