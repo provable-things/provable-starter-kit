@@ -1,8 +1,8 @@
 import React from 'react'
-import StyledLoader from './loader'
 import Wallet from './Wallet/index.js'
 import styles from '../App.module.scss'
 import DeployCheck from './deploy-check'
+import StyledLoader from './styled-loader'
 import Web3Info from './Web3Info/index.js'
 import Instructions from './Instructions/index'
 
