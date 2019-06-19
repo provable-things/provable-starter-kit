@@ -1,34 +1,32 @@
 import React from "react"
-import { Loader } from 'rimble-ui'
+import FAQ from './components/faq'
+import EVM from './components/evm'
 import styles from './App.module.scss'
-import Hero from "./components/Hero/index.js"
+import StyledLoader from './components/loader'
 import Header from "./components/Header/index.js"
 import Footer from "./components/Footer/index.js"
 import Wallet from "./components/Wallet/index.js"
 import Web3Info from "./components/Web3Info/index.js"
 import CounterUI from "./components/Counter/index.js"
-import getWeb3, { getGanacheWeb3 } from "./utils/getWeb3"
+import DeployCheck from './components/deploy-check'
+import { getWeb3, getGanacheWeb3 }  from "./utils/getWeb3"
 import Instructions from "./components/Instructions/index.js"
 import { zeppelinSolidityHotLoaderOptions } from '../config/webpack'
 
 export default class App extends React.Component {
+
   state = {
-    storageValue: 0,
     web3: null,
     accounts: null,
     contract: null,
+    storageValue: 0,
     route: window.location.pathname.replace("/","")
-  };
-
-  getGanacheAddresses = async () => {
-    if (!this.ganacheProvider) {
-      this.ganacheProvider = getGanacheWeb3();
-    }
-    if (this.ganacheProvider) {
-      return await this.ganacheProvider.eth.getAccounts();
-    }
-    return [];
   }
+
+  getGanacheAddresses = async _ =>
+    this.ganacheProvider
+      ? await this.ganacheProvider.eth.getAccounts()
+      : this.ganacheProvider = getGanacheWeb3()
 
   componentDidMount = async () => {
     const hotLoaderDisabled = zeppelinSolidityHotLoaderOptions.disabled;
@@ -168,14 +166,6 @@ export default class App extends React.Component {
     this.updateTokenOwner();
   };
 
-  renderLoader = _ =>
-    (
-      <div className={styles.loader}>
-        <Loader size="80px" color="red" />
-        <h3> Loading Web3, accounts, and contract...</h3>
-        <p> Unlock your metamask </p>
-      </div>
-    )
 
 
   renderBody = _ => {
@@ -183,7 +173,7 @@ export default class App extends React.Component {
     const updgradeCommand = (networkType === 'private' && !hotLoaderDisabled) ? "upgrade-auto" : "upgrade";
     return (
       <div className={styles.wrapper}>
-        {!this.state.web3 && this.renderLoader()}
+        {!this.state.web3 && <StyledLoader />}
         {
           this.state.web3 &&
           !this.state.contract &&
@@ -230,7 +220,7 @@ export default class App extends React.Component {
       : "upgrade"
     return (
       <div className={styles.wrapper}>
-        {!this.state.web3 && this.renderLoader()}
+        {!this.state.web3 && <StyledLoader />}
         {
           this.state.web3 &&
           !this.state.contract &&
