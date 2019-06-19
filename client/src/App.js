@@ -168,44 +168,31 @@ export default class App extends React.Component {
     this.updateTokenOwner();
   };
 
-  renderLoader() {
-    return (
+  renderLoader = _ =>
+    (
       <div className={styles.loader}>
         <Loader size="80px" color="red" />
         <h3> Loading Web3, accounts, and contract...</h3>
         <p> Unlock your metamask </p>
       </div>
-    );
-  }
+    )
 
-  renderDeployCheck(instructionsKey) {
-    return (
-      <div className={styles.setup}>
-        <div className={styles.notice}>
-          Your contracts are <b>not deployed</b> in this network. Two potential reasons: <br />
-          <p>
-            <b>1) Maybe you are in the wrong network?</b><br />
-            Point Metamask to localhost!<br /><br />
-            <b>2) You contract is not yet deployed.</b><br />
-            Follow the instructions below!
-          </p>
-        </div>
-        <Instructions
-          ganacheAccounts={this.state.ganacheAccounts}
-          name={instructionsKey} accounts={this.state.accounts} />
-      </div>
-    );
-  }
 
-  renderBody() {
+  renderBody = _ => {
     const { hotLoaderDisabled, networkType, accounts, ganacheAccounts } = this.state;
     const updgradeCommand = (networkType === 'private' && !hotLoaderDisabled) ? "upgrade-auto" : "upgrade";
     return (
       <div className={styles.wrapper}>
         {!this.state.web3 && this.renderLoader()}
-        {this.state.web3 && !this.state.contract && (
-          this.renderDeployCheck('counter')
-        )}
+        {
+          this.state.web3 &&
+          !this.state.contract &&
+          <DeployCheck
+            name='counter'
+            accounts={this.state.accounts}
+            ganacheAccounts={this.state.ganacheAccounts}
+          />
+        }
         {this.state.web3 && this.state.contract && (
           <div className={styles.contracts}>
             <h1>Counter Contract is good to Go!</h1>
@@ -236,15 +223,23 @@ export default class App extends React.Component {
     );
   }
 
-  renderProvable() {
-    const { hotLoaderDisabled, networkType, accounts, ganacheAccounts } = this.state;
-    const updgradeCommand = (networkType === 'private' && !hotLoaderDisabled) ? "upgrade-auto" : "upgrade";
+  renderProvable = _ => {
+    const { hotLoaderDisabled, networkType, accounts, ganacheAccounts } = this.state
+    const updgradeCommand = (networkType === 'private' && !hotLoaderDisabled)
+      ? "upgrade-auto"
+      : "upgrade"
     return (
       <div className={styles.wrapper}>
         {!this.state.web3 && this.renderLoader()}
-        {this.state.web3 && !this.state.contract && (
-          this.renderDeployCheck('provable')
-        )}
+        {
+          this.state.web3 &&
+          !this.state.contract &&
+           <DeployCheck
+            name='provable'
+            accounts={this.state.accounts}
+            ganacheAccounts={this.state.ganacheAccounts}
+          />
+        }
         {this.state.web3 && this.state.contract && (
           <div className={styles.contracts}>
             <h1>Counter Contract is good to Go!</h1>
@@ -272,37 +267,22 @@ export default class App extends React.Component {
           </div>
         )}
       </div>
-    );
+    )
   }
 
-  renderInstructions() {
-    return (
-      <div className={styles.wrapper}>
-        <Hero />
-        <Instructions
-          ganacheAccounts={this.state.ganacheAccounts}
-          name="setup" accounts={this.state.accounts} />
-      </div>
-    );
-  }
-
-  renderFAQ() {
-    return (
-      <div className={styles.wrapper}>
-        <Instructions
-          ganacheAccounts={this.state.ganacheAccounts}
-          name="faq" accounts={this.state.accounts} />
-      </div>
-    );
-  }
-
-  renderEVM() {
-    return (
+  renderEVM = _ =>
+    (
       <div className={styles.wrapper}>
       {!this.state.web3 && this.renderLoader()}
-      {this.state.web3 && !this.state.wallet && (
-        this.renderDeployCheck('evm')
-      )}
+      {
+        this.state.web3 &&
+        !this.state.wallet &&
+        <DeployCheck
+          name='evm'
+          accounts={this.state.accounts}
+          ganacheAccounts={this.state.ganacheAccounts}
+        />
+      }
       {this.state.web3 && this.state.wallet && (
         <div className={styles.contracts}>
           <h1>Wallet Contract is good to Go!</h1>
