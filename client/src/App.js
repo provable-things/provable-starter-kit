@@ -260,37 +260,6 @@ export default class App extends React.Component {
     )
   }
 
-  renderEVM = _ =>
-    (
-      <div className={styles.wrapper}>
-      {!this.state.web3 && this.renderLoader()}
-      {
-        this.state.web3 &&
-        !this.state.wallet &&
-        <DeployCheck
-          name='evm'
-          accounts={this.state.accounts}
-          ganacheAccounts={this.state.ganacheAccounts}
-        />
-      }
-      {this.state.web3 && this.state.wallet && (
-        <div className={styles.contracts}>
-          <h1>Wallet Contract is good to Go!</h1>
-          <p>Interact with your contract on the right.</p>
-          <p> You can see your account info on the left </p>
-          <div className={styles.widgets}>
-            <Web3Info {...this.state} />
-            <Wallet
-              renounce={this.renounceOwnership}
-              {...this.state} />
-          </div>
-          <Instructions
-            ganacheAccounts={this.state.ganacheAccounts}
-            name="evm" accounts={this.state.accounts} />
-        </div>
-      )}
-      </div>
-  )
 
 
   render = _ =>
@@ -314,7 +283,8 @@ export default class App extends React.Component {
             />
           }
 
-          { this.state.route === 'evm' && this.renderEVM() }
+      { this.state.route === 'evm' && <EVM {...this.state} /> }
+
           { this.state.route === 'provable' && this.renderProvable() }
 
         <Footer />
