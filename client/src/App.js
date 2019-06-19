@@ -2,15 +2,16 @@ import React from "react"
 import FAQ from './components/faq'
 import EVM from './components/evm'
 import styles from './App.module.scss'
-import StyledLoader from './components/loader'
 import Header from "./components/Header/index.js"
 import Footer from "./components/Footer/index.js"
 import Wallet from "./components/Wallet/index.js"
-import Web3Info from "./components/Web3Info/index.js"
 import CounterUI from "./components/Counter/index.js"
 import DeployCheck from './components/deploy-check'
+import StyledLoader from './components/styled-loader'
+import Web3Info from "./components/Web3Info/index.js"
 import { getWeb3, getGanacheWeb3 }  from "./utils/getWeb3"
 import Instructions from "./components/Instructions/index.js"
+import ProvableCrowdsale from './components/provable-crowdsale'
 import { zeppelinSolidityHotLoaderOptions } from '../config/webpack'
 
 export default class App extends React.Component {
@@ -20,7 +21,7 @@ export default class App extends React.Component {
     accounts: null,
     contract: null,
     storageValue: 0,
-    route: window.location.pathname.replace("/","")
+    route: window.location.pathname.replace("/", "")
   }
 
   getGanacheAddresses = async _ =>
@@ -213,55 +214,6 @@ export default class App extends React.Component {
     );
   }
 
-  renderProvable = _ => {
-    const { hotLoaderDisabled, networkType, accounts, ganacheAccounts } = this.state
-    const updgradeCommand = (networkType === 'private' && !hotLoaderDisabled)
-      ? "upgrade-auto"
-      : "upgrade"
-    return (
-      <div className={styles.wrapper}>
-        {!this.state.web3 && <StyledLoader />}
-        {
-          this.state.web3 &&
-          !this.state.contract &&
-           <DeployCheck
-            name='provable'
-            accounts={this.state.accounts}
-            ganacheAccounts={this.state.ganacheAccounts}
-          />
-        }
-        {this.state.web3 && this.state.contract && (
-          <div className={styles.contracts}>
-            <h1>Counter Contract is good to Go!</h1>
-            <p>Interact with your contract on the right.</p>
-            <p> You can see your account info on the left </p>
-            <div className={styles.widgets}>
-              <Web3Info {...this.state} />
-              <CounterUI
-                decrease={this.decreaseCount}
-                increase={this.increaseCount}
-                {...this.state} />
-            </div>
-            {this.state.balance < 0.1 && (
-              <Instructions
-                ganacheAccounts={ganacheAccounts}
-                name="metamask"
-                accounts={accounts} />
-            )}
-            {this.state.balance >= 0.1 && (
-              <Instructions
-                ganacheAccounts={this.state.ganacheAccounts}
-                name={updgradeCommand}
-                accounts={accounts} />
-            )}
-          </div>
-        )}
-      </div>
-    )
-  }
-
-
-
   render = _ =>
     (
       <div className={styles.App}>
@@ -283,9 +235,9 @@ export default class App extends React.Component {
             />
           }
 
-      { this.state.route === 'evm' && <EVM {...this.state} /> }
+          { this.state.route === 'evm' && <EVM {...this.state} /> }
 
-          { this.state.route === 'provable' && this.renderProvable() }
+          { this.state.route === 'provable' && <ProvableCrowdsale {...this.state } /> }
 
         <Footer />
       </div>
