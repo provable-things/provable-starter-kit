@@ -308,6 +308,14 @@ export default class App extends React.Component {
       <div className={styles.App}>
         <Header />
           {
+            this.state.route === '' &&
+            <Instructions
+              name="setup"
+              accounts={this.state.accounts}
+              ganacheAccounts={this.state.ganacheAccounts}
+            />
+          }
+          {
             this.state.route === 'faq' &&
             <FAQ
               name="faq"
@@ -317,7 +325,6 @@ export default class App extends React.Component {
           }
 
           { this.state.route === 'evm' && this.renderEVM() }
-          { this.state.route === '' && this.renderInstructions() }
           { this.state.route === 'provable' && this.renderProvable() }
 
         <Footer />
