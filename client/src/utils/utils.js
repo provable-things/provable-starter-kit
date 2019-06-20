@@ -1,4 +1,4 @@
-import { getGanacheWeb3 } from './getWeb3'
+import { getGanacheWeb3 } from './get-web3'
 
 export const getDefaultAddressFromGanacheAccounts = _ganacheAccounts =>
   _ganacheAccounts && _ganacheAccounts.length > 2

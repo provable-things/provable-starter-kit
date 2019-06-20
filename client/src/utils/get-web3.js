@@ -19,9 +19,15 @@ export const getWeb3 = () =>
           : window.web3
             ? window.web3
             : getLocalWeb3()
-      )
+    )
 
 export const getGanacheWeb3 = _ =>
   process.env.NODE_ENV !== 'production'
-    ? new Web3(new Web3.providers.HttpProvider(LOCAL_HOST_WEB3))
+    ? new Web3(new Web3.providers.HttpProvider('http://0.0.0.0:8545'))
     : null
+
+export const getNetworkIDFromWeb3 = _web3 =>
+  !_web3
+    ? Promise.resolve(null)
+    : _web3.eth.net.getId()
+      .then(_ => _web3)
