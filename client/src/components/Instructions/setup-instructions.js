@@ -2,20 +2,28 @@ import React from 'react'
 import styles from './Instructions.module.scss'
 
 export default _props => {
-  const isProd = process.env.NODE_ENV === 'production'
+  const isProd = process.env.NODE_ENV === 'production' // FIXME: Rm prod stuff? And maybe even the barebones?
   if (!isProd) {
     return (
       <div className={styles.instructions}>
         <h1> ZepKit is running! </h1>
+
         <div className={styles.step}>
           <div className={styles.instruction}>
-            Congratulations! Your application is correctly setup.
-            Now, you have three options:
+            Congratulations! Your environment is setup correctly!
+            Now, you have two options:
           </div>
         </div>
+
         <div className={styles.step}>
           <div className={styles.instruction}>
-            a. Start your project from scratch.
+            a. Try the <a href='/provable'>Provable Crowdsale</a> tutorial!
+          </div>
+        </div>
+
+        <div className={styles.step}>
+          <div className={styles.instruction}>
+            b. Start your project from scratch.
           </div>
           <div className={styles.code}>
             <code>
@@ -24,17 +32,6 @@ export default _props => {
           </div>
         </div>
 
-        <div className={styles.step}>
-          <div className={styles.instruction}>
-            b. Visit the tutorials. Start with the <a href='/counter'> Counter</a> page to deploy and interact with your first contract.
-          </div>
-        </div>
-
-        <div className={styles.step}>
-          <div className={styles.instruction}>
-            c) Try the <a href='/provable'>Provable-Zeppelin-Crowdsale</a> tutorial!
-          </div>
-        </div>
 
       </div>
 
