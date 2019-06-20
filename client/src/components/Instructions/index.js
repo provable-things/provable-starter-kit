@@ -1,16 +1,16 @@
 import React from 'react'
-import renderSetup from './setup-instructions'
 import styles from './Instructions.module.scss'
-import renderMetamask from './metamask-instructions'
-import renderProvableInstructions from './provable-instructions'
+import RenderSetupInstructions from './setup-instructions'
+import RenderMetamaskInstructions from './metamask-instructions'
+import RenderProvableInstructions from './provable-instructions'
 
-export default ({ routeName })=>
+export default _props =>
   <div className={styles.wrapper}>
     {
-      routeName === 'provable'
-        ? renderProvableInstructions()
-        : routeName === 'metamask'
-        ? renderMetamask()
-        : renderSetup()
+      _props.routeName === 'provable'
+        ? <RenderProvableInstructions {..._props} />
+        : _props.routeName === 'metamask'
+        ? <RenderMetamaskInstructions {..._props} />
+        : <RenderSetupInstructions {..._props} />
     }
   </div>
