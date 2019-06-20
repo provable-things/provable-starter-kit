@@ -83,13 +83,8 @@ export default _props =>
 
       <div className={styles.step}>
         <div className={styles.instruction}>
-          Congratulations! Your contracts should be deployed to the Ganache network!<br/><br/>
-          Refresh the page to interact with them:
+          Congratulations! Your contracts should be deployed to the Ganache network! The Crowdsale DApp will load once your crowdsale contract is detected on the network.<br/><br/>
         </div>
-        <Button onClick={() => window.location.reload()}>
-          Reload
-        </Button>
       </div>
-
     </div>
   )

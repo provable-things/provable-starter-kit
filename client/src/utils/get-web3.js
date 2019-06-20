@@ -26,7 +26,7 @@ export const getGanacheWeb3 = _ =>
     ? new Web3(new Web3.providers.HttpProvider('http://0.0.0.0:8545'))
     : null
 
-export const getNetworkIDFromWeb3 = _web3 =>
+export const getNetworkIdFromWeb3 = _web3 =>
   !_web3
     ? Promise.resolve(null)
     : _web3.eth.net.getId()
