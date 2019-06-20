@@ -1,4 +1,4 @@
-import { getGanacheWeb3 } from './get-web3'
+import { getGanacheWeb3 } from './web3-utils'
 
 export const getDefaultAddressFromGanacheAccounts = _ganacheAccounts =>
   _ganacheAccounts && _ganacheAccounts.length > 2
@@ -15,9 +15,9 @@ export const getContractInstance = (_contractArtifact, _networkId, _web3) =>
   _contractArtifact.networks &&
   getDeployedNetwork(_contractArtifact, _networkId) &&
     new _web3.eth.Contract(
-    _contractArtifact.abi,
-    getDeployedNetwork(_contractArtifact, _networkId) &&
-    getDeployedNetwork(_contractArtifact, _networkId).address
+      _contractArtifact.abi,
+      getDeployedNetwork(_contractArtifact, _networkId) &&
+      getDeployedNetwork(_contractArtifact, _networkId).address
   )
 
 export const getUserBalance = (_address, _web3) =>

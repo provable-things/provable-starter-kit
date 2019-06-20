@@ -1,7 +1,7 @@
 import {
   getGanacheWeb3,
   getNetworkIDFromWeb3
-} from '../../utils/get-web3'
+} from '../../utils/web3-utils'
 
 import React from 'react'
 import styles from './Instructions.module.scss'

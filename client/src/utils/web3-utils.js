@@ -31,3 +31,9 @@ export const getNetworkIdFromWeb3 = _web3 =>
     ? Promise.resolve(null)
     : _web3.eth.net.getId()
       .then(_ => _web3)
+
+export const readValueFromContract = (_contract, _value) =>
+  _contract
+    .methods[_value]
+    .call()
+
