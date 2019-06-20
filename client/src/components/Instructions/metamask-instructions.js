@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from './Instructions.module.scss'
-import { getDefaultAddress } from '../../utils/utils.js'
+import { getDefaultAddressFromGanacheAccounts } from '../../utils/utils.js'
 
 const getCode = (_defaultAddress, _address) =>
     `web3.eth.sendTransaction({from: '${_defaultAddress}',to:'${_address}', value: web3.utils.toWei("0.5", "ether")}) `
@@ -26,7 +26,12 @@ export default _props =>
         </div>
         <div className={styles.code}>
           <code>
-            {getCode(getDefaultAddress(_props), _props.accounts[0])}
+            {
+              getCode(
+                getDefaultAddressFromGanacheAccounts(_props.ganacheAccounts),
+                _props.accounts[0]
+              )
+            }
           </code>
         </div>
       </div>
