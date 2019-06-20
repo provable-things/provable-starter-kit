@@ -1,11 +1,15 @@
+import {
+  getContractInstance,
+  getUserBalanceInEth,
+  getGanacheAddresses
+} from './utils/utils'
 import React from 'react'
+import styles from './App.module.scss'
 import FAQ from './components/Faq/index'
 import EVM from './components/Evm/index'
-import styles from './App.module.scss'
+import { getWeb3 }  from './utils/getWeb3'
 import Header from './components/Header/index'
 import Footer from './components/Footer/index'
-import Wallet from './components/Wallet/index'
-import { getWeb3, getGanacheWeb3 }  from './utils/getWeb3'
 import Instructions from './components/Instructions/index'
 import Provable from './components/ProvableCrowdsale/index'
 import { zeppelinSolidityHotLoaderOptions } from '../config/webpack'
@@ -20,115 +24,90 @@ export default class App extends React.Component {
     route: window.location.pathname.replace('/', '')
   }
 
-  getGanacheAddresses = async _ =>
-    this.ganacheProvider
-      ? await this.ganacheProvider.eth.getAccounts()
-      : this.ganacheProvider = getGanacheWeb3()
-
-  componentDidMount = async () => {
-    const hotLoaderDisabled = zeppelinSolidityHotLoaderOptions.disabled;
-    let Counter = {};
-    let ProvableZeppelinCrowdsale = {}
-    let Wallet = {}
-    try {
-      //Counter = require("../../contracts/Counter.sol");
-      Wallet = require("../../contracts/Wallet.sol")
-      ProvableZeppelinCrowdsale = require('../../contracts/ProvableZeppelinCrowdsale.sol')
-      //console.log('Contract artifacts gotten!'); // FIXME: Remove
-    } catch (e) {
-      console.log('Error getting contract artifacts: ', e)
-    }
-    try {
-      const isProd = process.env.NODE_ENV === 'production'
-      if (!isProd) { // NOTE: Why is there no else?
-        // Get network provider and web3 instance.
-        const web3 = await getWeb3();
-        let ganacheAccounts = [];
-        try {
-          ganacheAccounts = await this.getGanacheAddresses();
-        } catch (e) {
-          console.log('Ganache is not running');
-        }
-        const accounts = await web3.eth.getAccounts();
-        // Get the contract instance.
-        const networkId = await web3.eth.net.getId();
-        const networkType = await web3.eth.net.getNetworkType();
-        const isMetaMask = web3.currentProvider.isMetaMask;
-        let balance = accounts.length > 0 ? await web3.eth.getBalance(accounts[0]): web3.utils.toWei('0');
-        balance = web3.utils.fromWei(balance, 'ether');
-        console.log('balance: ', balance) // FIXME: Remove
-        let instance = null;
-        let instanceWallet = null;
-        let deployedNetwork = null;
-        //if (Counter.networks) {
-        if (ProvableZeppelinCrowdsale.networks) {
-          deployedNetwork = ProvableZeppelinCrowdsale.networks[networkId.toString()];
-          if (deployedNetwork) {
-            instance = new web3.eth.Contract(
-              ProvableZeppelinCrowdsale.abi,
-              deployedNetwork && deployedNetwork.address,
-            );
-          }
-        }
-        if (Wallet.networks) {
-          deployedNetwork = Wallet.networks[networkId.toString()];
-          if (deployedNetwork) {
-            instanceWallet = new web3.eth.Contract(
-              Wallet.abi,
-              deployedNetwork && deployedNetwork.address,
-            );
-          }
-        }
-        if (instance || instanceWallet) {
-          // Set web3, accounts, and contract to the state, and then proceed with an
-          // example of interacting with the contract's methods.
-          this.setState({ web3, ganacheAccounts, accounts, balance, networkId, networkType, hotLoaderDisabled,
-            isMetaMask, contract: instance, wallet: instanceWallet }, () => {
-              this.updateCrowdsaleContractValuesInState(instance, instanceWallet);
-              setInterval(() => {
-                this.updateCrowdsaleContractValuesInState(instance, instanceWallet);
-              }, 5000);
-            });
-        }
-        else {
-          this.setState({ web3, ganacheAccounts, accounts, balance, networkId, networkType, hotLoaderDisabled, isMetaMask });
-        }
-      }
-    } catch (error) {
-      alert(`Failed to load web3, accounts, or contract. Check console for details.`)
-      console.error(error);
-    }
-  }
-
-  componentWillUnmount() {
-    if (this.interval) {
-      clearInterval(this.interval);
-    }
-  }
-
-  updateCrowdsaleContractValuesInState = (instance, instanceWallet) => {
-    if (instance) {
-      console.log('owner: ', this.state.owner)
-      console.log('tokenAddress: ', this.state.tokenAddress)
-      console.log('wei raised: ', this.state.totalWeiRaised)
-      console.log('ethPriceCent', this.state.ethPriceInCents)
-      console.log('pricePerToken', this.state.ethPriceInCents)
-      console.log('crowd sale initialized', this.state.crowdsaleInitialized)
-      Promise.all(
-        [
-          'owner',
-          'totalWeiRaised',
-          'ethPriceInCents',
-          'simpleTokenAddress',
-          'pricePerTokenInWei',
-          'crowdsaleInitialized'
-        ].map(_value => this.getValueFromContractAndUpdateInState(_value))
+  componentDidMount = async () =>
+    Promise.all([
+      getWeb3(),
+      getGanacheAddresses(),
+      require('../../build/contracts/ProvableZeppelinCrowdsale.json')
+    ])
+      .then(([
+        _web3,
+        _ganacheAccounts,
+        _crowdsaleArtifact
+      ]) =>
+        Promise.all([
+          _web3,
+          _ganacheAccounts,
+          _crowdsaleArtifact,
+          _web3.eth.net.getId(),
+          _web3.eth.getAccounts(),
+          _web3.eth.net.getNetworkType(),
+          _web3.currentProvider.isMetamask
+        ])
       )
-    }
-    if (instanceWallet) {
-      this.updateTokenOwner();
-    }
-  }
+      .then(async ([
+          _web3,
+          _ganacheAccounts,
+          _crowdsaleArtifact,
+          _networkId,
+          _accounts,
+          _networkType,
+          _isMetamask
+      ]) => {
+
+        const hotLoaderDisabled = zeppelinSolidityHotLoaderOptions.disabled
+
+        if (process.env.NODE_ENV !== 'production') {
+          const balance = _accounts.length > 0
+            ? await getUserBalanceInEth(_accounts[0], _web3)
+            : _web3.utils.fromWei(0, 'ether')
+
+          const crowdsaleInstance = getContractInstance(_crowdsaleArtifact, _networkId, _web3)
+
+          if ( crowdsaleInstance) {
+            return this.setState({
+              web3: _web3,
+              balance: balance,
+              accounts: _accounts,
+              networkId: _networkId,
+              isMetaMask: _isMetamask,
+              networkType: _networkType,
+              ganacheAccounts: _ganacheAccounts,
+              hotLoaderDisabled,
+              contract: crowdsaleInstance
+            }, _ => {
+              console.log('sadfg')
+              this.updateCrowdsaleContractValuesInState(crowdsaleInstance)
+                setInterval(_ =>
+                  this.updateCrowdsaleContractValuesInState(crowdsaleInstance)
+                , 5000)
+              })
+          } else {
+            this.setState({
+              web3: _web3,
+              balance: balance,
+              accounts: _accounts,
+              networkId: _networkId,
+              isMetaMask: _isMetamask,
+              networkType: _networkType,
+              ganacheAccounts: _ganacheAccounts,
+              hotLoaderDisabled,
+            })
+          }
+        }
+    })
+
+  updateCrowdsaleContractValuesInState = _crowdsaleInstance =>
+    Promise.all(
+      [
+        'owner',
+        'totalWeiRaised',
+        'ethPriceInCents',
+        'simpleTokenAddress',
+        'pricePerTokenInWei',
+        'crowdsaleInitialized'
+      ].map(_value => this.getValueFromContractAndUpdateInState(_value))
+    )
 
   getValueFromContractInState = (_value) =>
     this.state.contract.methods[_value]().call()
@@ -137,31 +116,8 @@ export default class App extends React.Component {
     this.getValueFromContractInState(_value)
      .then(_returnValue => this.setState({ [_value]: _returnValue }))
 
-  updateTokenOwner = async () => {
-    const { wallet, accounts } = this.state;
-    // Get the value from the contract to prove it worked.
-    const response = await wallet.methods.owner().call();
-    // Update state with the result.
-    this.setState({ tokenOwner: response.toString() === accounts[0].toString() });
-  };
-
-  increaseCount = async (number) => {
-    const { accounts, contract } = this.state;
-    await contract.methods.increaseCounter(number).send({ from: accounts[0] });
-    //this.getCount();
-  };
-
-  decreaseCount = async (number) => {
-    const { accounts, contract } = this.state;
-    await contract.methods.decreaseCounter(number).send({ from: accounts[0] });
-    //this.getCount();
-  };
-
-  renounceOwnership = async (number) => {
-    const { accounts, wallet } = this.state;
-    await wallet.methods.renounceOwnership().send({ from: accounts[0] });
-    this.updateTokenOwner();
-  };
+  componentWillUnmount = _ =>
+    this.interval && clearInterval(this.interval)
 
   render = _ =>
     (
