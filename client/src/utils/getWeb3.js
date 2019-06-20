@@ -20,7 +20,6 @@ export const getWeb3 = () =>
             ? window.web3
             : getLocalWeb3()
       )
-    .catch(_e => console.error('Error getting web3!', _e))
 
 export const getGanacheWeb3 = _ =>
   process.env.NODE_ENV !== 'production'

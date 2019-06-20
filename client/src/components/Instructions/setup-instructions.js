@@ -17,7 +17,7 @@ export default _props => {
 
         <div className={styles.step}>
           <div className={styles.instruction}>
-            a. Try the <a href='/provable'>Provable Crowdsale</a> tutorial!
+            a. Try the <b><a href='/provable'>Provable Crowdsale</a></b> tutorial!
           </div>
         </div>
 
