@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import styles from './Hero.module.scss';
-import cx from 'classnames';
-import logos from './pic_bg.png';
+import cx from 'classnames'
+import logos from './pic_bg.png'
+import styles from './Hero.module.scss'
+import React, { Component } from "react"
 
 export default class Hero extends Component {
 
@@ -40,8 +40,14 @@ export default class Hero extends Component {
                 - Includes <a
                   target="_blank"
                   rel="noopener noreferrer"
+                  href="https://provable.xyz/">Provable Things</a> oracle for external data.
+              </div>
+              <div className={styles.feature}>
+                - Includes <a
+                  target="_blank"
+                  rel="noopener noreferrer"
                   href="https://infura.io">
-                 Infura</a> setup for easy deployments & connection.
+                 Infura</a> setup for easy deployments.
               </div>
               <div className={styles.feature}>
                 - <a
