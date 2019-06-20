@@ -1,61 +1,82 @@
 import {
   getGanacheAccounts,
-  getUserBalanceInEth,
   getContractInstance
 } from '../../utils/utils'
 
 import {
-  getWeb3,
   getGanacheWeb3,
-  getNetworkIDFromWeb3
-} from '../../utils/get-web3'
+  getNetworkIdFromWeb3,
+} from '../../utils/web3-utils'
 
-import { Loader } from 'rimble-ui'
 import React from 'react'
-import Web3Info from '../Web3Info/index'
-import styles from '../../App.module.scss'
-import DeployCheck from '../DeployCheck/index'
-import StyledLoader from '../StyledLoader/index'
+import { Loader } from 'rimble-ui'
+import CrowdsaleDapp from './crowdsale-dapp'
 import Instructions from '../Instructions/index'
-import instructionStyles from '../Instructions/Instructions.module.scss'
-import { zeppelinSolidityHotLoaderOptions } from '../../../config/webpack'
 
 export default class Provable extends React.Component {
 
   state = {
     web3: undefined,
-    timeout: null
+    crowdsaleContract: null,
   }
 
   pollForWeb3 = _ =>
-    getNetworkIDFromWeb3(getGanacheWeb3())
-      .then(_web3 => _web3
-        ? this.setState({ web3: _web3 })
-        : Promise.reject()
+    getNetworkIdFromWeb3(getGanacheWeb3())
+      .then(_web3 =>
+        !_web3
+          ? Promise.reject()
+          : Promise.all([
+            _web3,
+            getGanacheAccounts(),
+            _web3.eth.net.getId(),
+            _web3.eth.getAccounts(),
+          ])
       )
-      .catch(_ => {
-        clearTimeout()
-        const timeout = setTimeout(_ => this.pollForWeb3(), 2000)
-        this.setState({ timeout })
+      .then(([ web3, accounts, networkId, ganacheAccounts ]) => {
+        this.setState({ web3, accounts, networkId, ganacheAccounts })
       })
+      .catch(_ => this.resetWeb3Poll)
 
-  pollForContracts = _ =>
-    console.log('polling now sir')
+  checkForCrowdsaleContract = _ =>
+    Promise.resolve(
+      getContractInstance(
+        require('../../../../build/contracts/ProvableZeppelinCrowdsale.json'),
+        this.state.networkId,
+        this.state.web3
+      )
+    )
+      .then(crowdsaleContract =>
+        !crowdsaleContract
+          ? Promise.reject()
+          : this.setState({ crowdsaleContract })
+      )
+      .catch(_e => console.error(_e))
+
+  resetTimeoutInState = (_oldTimeout, _fxn, _key) => {
+    _oldTimeout && clearTimeout(_oldTimeout)
+    this.setState({ [_key]: setTimeout(_ => _fxn, 2000) })
+  }
+
+  resetWeb3Poll = _ =>
+    this.resetTimeoutInState(
+      this.state.web3PollTimeout,
+      this.pollForWeb3,
+      'web3PollTimeout'
+    )
 
   componentWillMount = _ =>
     this.pollForWeb3()
-
-  clearTimeout = _ =>
-    clearTimeout(this.state.timeout)
+      .then(_ => this.checkForCrowdsaleContract())
 
   componentWillUnmount = _ =>
-    this.clearTimeout()
+    this.clearWeb3PollTimeout()
 
   render = _ =>
     this.state.web3 === undefined
       ? <Loader size="50px" color="blue" />
       : this.state.web3 === null
       ? <Instructions instructionSet='noWeb3' />
-      : <Instructions instructionSet='provableCrowdsale' />
+      : this.state.crowdsaleContract === null
+      ? <Instructions instructionSet='provableCrowdsale' ganacheAccounts={this.state.ganacheAccounts} />
+      : <CrowdsaleDapp />
 }
-
