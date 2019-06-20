@@ -30,4 +30,6 @@ export const getUserBalanceInEth = (_address, _web3) =>
 export const getGanacheAddresses = _ =>
   getGanacheWeb3().eth.getAccounts()
 
+export const getRoute = _ =>
+  window.location.pathname.replace('/', '')
 
