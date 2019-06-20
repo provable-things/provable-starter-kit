@@ -1,30 +1,17 @@
-import React from 'react';
-import styles from './header.module.scss';
-import logo from './zk_logo.svg';
+import React from 'react'
+import logo from './zk_logo.svg'
+import styles from './header.module.scss'
 
-const Header = () => (
+export default _ =>
   <div className={styles.header}>
     <nav id="menu" className="menu">
       <div className={styles.brand}>
         <a href="/" className={styles.link}> <img src={logo} alt="logo" /></a>
       </div>
       <ul>
-        <li><a href="/" className={styles.link}> Setup</a></li>
-
-        {process.env.NODE_ENV !== 'production' && (
-          <li><a href="/counter" className={styles.link}> Counter</a></li>
-        )}
-
-        <li><a href="/provable" className={styles.link}>Provable</a></li>
-
-        {process.env.NODE_ENV !== 'production' && (
-          <li><a href="/evm" className={styles.link}> EVM Packages</a></li>
-        )}
-
-        <li><a href="/faq" className={styles.link}> FAQ</a></li>
+        <li><a href="/" className={styles.link}> Home</a></li>
+        <li><a href="/setup" className={styles.link}> Setup</a></li>
+        <li><a href="/provable" className={styles.link}>Provable Crowdsale</a></li>
       </ul>
     </nav>
   </div>
-)
-
-export default Header;

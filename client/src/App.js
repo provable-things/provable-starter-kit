@@ -5,9 +5,8 @@ import {
 } from './utils/utils'
 import React from 'react'
 import styles from './App.module.scss'
-import FAQ from './components/Faq/index'
-import EVM from './components/Evm/index'
 import { getWeb3 }  from './utils/getWeb3'
+import Hero from "./components/Hero/index.js"
 import Header from './components/Header/index'
 import Footer from './components/Footer/index'
 import Instructions from './components/Instructions/index'
@@ -123,9 +122,8 @@ export default class App extends React.Component {
     (
       <div className={styles.App}>
         <Header />
-          { this.state.route === 'evm' && <EVM name='evm' {...this.state} /> }
-          { this.state.route === 'faq' && <FAQ name='faq' { ...this.state } /> }
-          { this.state.route === '' && <Instructions name='setup' { ... this.state } /> }
+          { this.state.route === '' && <Hero /> }
+          { this.state.route === 'setup' && <Instructions name='setup' { ... this.state } /> }
           { this.state.route === 'provable' && <Provable name='provable' {...this.state } /> }
         <Footer />
       </div>
