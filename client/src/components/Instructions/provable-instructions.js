@@ -41,7 +41,9 @@ export default _props =>
         </div>
         <div className={styles.code}>
           <code>
-            zos session --network development --from {getDefaultAddress(_props)} --expires 3600
+            zos session --network development --from {
+              getDefaultAddressFromGanacheAccounts(_props.ganacheAccounts)
+            } --expires 3600
           </code>
         </div>
       </div>

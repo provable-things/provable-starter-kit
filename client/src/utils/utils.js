@@ -1,8 +1,8 @@
 import { getGanacheWeb3 } from './getWeb3'
 
-export const getDefaultAddress = _props =>
-  _props.ganacheAccounts && _props.ganacheAccounts.length > 2
-    ? _props.ganacheAccounts[2]
+export const getDefaultAddressFromGanacheAccounts = _ganacheAccounts =>
+  _ganacheAccounts && _ganacheAccounts.length > 2
+    ? _ganacheAccounts[2]
     : '<ADDRESS>'
 
 export const waitUntilPageLoaded = _ =>
@@ -27,7 +27,7 @@ export const getUserBalanceInEth = (_address, _web3) =>
   getUserBalance(_address, _web3)
     .then(_balance => _web3.utils.fromWei(_balance, 'ether'))
 
-export const getGanacheAddresses = _ =>
+export const getGanacheAccounts = _ =>
   getGanacheWeb3().eth.getAccounts()
 
 export const getRoute = _ =>
