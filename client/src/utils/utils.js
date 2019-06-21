@@ -1,4 +1,15 @@
+import { curry } from 'ramda'
 import { getGanacheWeb3 } from './web3-utils'
+
+export const CROWDSALE_CONTRACT_VARIABLE_NAMES = [
+  'owner',
+  'tokenAddress',
+  'totalWeiRaised',
+  'ethPriceInCents',
+  'simpleTokenAddress',
+  'pricePerTokenInWei',
+  'crowdsaleInitialized'
+]
 
 export const getDefaultAddressFromGanacheAccounts = _ganacheAccounts =>
   _ganacheAccounts && _ganacheAccounts.length > 2
@@ -32,4 +43,28 @@ export const getGanacheAccounts = _ =>
 
 export const getRoute = _ =>
   window.location.pathname.replace('/', '')
+
+
+export const getValueFromContract = curry((_contract, _variableName) =>
+  _contract
+    .methods[_variableName]()
+    .call()
+)
+
+export const getAllContractState = (_contract, _variableNames) =>
+  Promise.all(_variableNames.map(getValueFromContract(_contract)))
+
+
+export const sliceAddressForDisplay = _address =>
+  _address && `${_address.slice(0, 10)}...`
+
+export const convertCentsToDollars = _cents => {
+  const dollars = _cents / 100
+  return dollars.toFixed(2)
+}
+
+export const convertWeiToEth = (_wei, _web3) =>
+  _wei && _web3.utils
+    ? _web3.utils.fromWei(`${_wei}`, 'ether')
+    : 0
 
