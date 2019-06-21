@@ -9,8 +9,8 @@ import {
 } from '../../utils/web3-utils'
 
 import React from 'react'
-import { Loader } from 'rimble-ui'
 import CrowdsaleDapp from './crowdsale-dapp'
+import StyledLoader from '../StyledLoader/index'
 import Instructions from '../Instructions/index'
 
 export default class Provable extends React.Component {
@@ -20,7 +20,7 @@ export default class Provable extends React.Component {
     crowdsaleContract: null,
   }
 
-  pollForWeb3 = _ =>
+  pollForWeb3 = _ => // FIXME: Factor this out to just a pure fxn that recurses returning either web3 or null
     getNetworkIdFromWeb3(getGanacheWeb3())
       .then(_web3 =>
         !_web3
@@ -35,7 +35,10 @@ export default class Provable extends React.Component {
       .then(([ web3, accounts, networkId, ganacheAccounts ]) => {
         this.setState({ web3, accounts, networkId, ganacheAccounts })
       })
-      .catch(_ => this.resetWeb3Poll)
+      .catch(_ => {
+        this.setState({ web3: null })
+        this.resetWeb3Poll()
+      })
 
   checkForCrowdsaleContract = _ =>
     Promise.resolve(
@@ -54,7 +57,7 @@ export default class Provable extends React.Component {
 
   resetTimeoutInState = (_oldTimeout, _fxn, _key) => {
     _oldTimeout && clearTimeout(_oldTimeout)
-    this.setState({ [_key]: setTimeout(_ => _fxn, 2000) })
+    this.setState({ [_key]: setTimeout(_fxn, 2000) })
   }
 
   resetWeb3Poll = _ =>
@@ -73,7 +76,7 @@ export default class Provable extends React.Component {
 
   render = _ =>
     this.state.web3 === undefined
-      ? <Loader size="50px" color="blue" />
+      ? <StyledLoader />
       : this.state.web3 === null
       ? <Instructions instructionSet='noWeb3' />
       : this.state.crowdsaleContract === null
