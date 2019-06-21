@@ -1,4 +1,5 @@
 import {
+  makeBuyATokenTransaction,
   makeProvableQueryTransaction,
   makeInitializeCrowdsaleTransaction
 } from '../../utils/utils.js'
@@ -18,7 +19,8 @@ export const ProvableQueryButton = _props =>
             _props.crowdsaleContract,
             _props.owner
           )
-  }>
+    }
+  >
     Make Provable Query!
   </Button>
 
@@ -33,6 +35,24 @@ export const InitializeCrowdsaleButton = _props =>
             _props.crowdsaleContract,
             _props.owner
           )
-  }>
+    }
+  >
     Initialize Your Crowdsale!
+  </Button>
+
+export const BuyATokenButton = _props =>
+  <Button
+    className={styles.button}
+    onClick={
+      _ =>
+        !_props.crowdsaleContract || !_props.purchaser || !_props.weiAmount
+          ? alert('How have you made it here without a crowdsale contract being deployed‽')
+          : makeBuyATokenTransaction(
+            _props.crowdsaleContract,
+            _props.purchaser,
+            _props.weiAmount
+          )
+    }
+  >
+    Buy A Token!
   </Button>

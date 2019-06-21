@@ -102,3 +102,20 @@ export const makeInitializeCrowdsaleTransaction = (_crowdsaleContract, _address)
     _address
   )
   .catch(_e => alert('Error when making transaction!:\n', _e))
+
+export const makeBuyATokenTransaction = (
+  _contract,
+  _from,
+  _value = 0,
+  _gasLimit = 2e6,
+  _gasPrice = 20e9
+) =>
+  callFxnInContract(
+    _contract,
+    'buyTokens',
+    _from,
+    [],
+    _value,
+    _gasLimit,
+    _gasPrice
+  )
