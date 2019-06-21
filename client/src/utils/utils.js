@@ -116,6 +116,6 @@ export const makeBuyATokenTransaction = (
     _from,
     [],
     _value,
-    _gasLimit,
-    _gasPrice
+    _gasPrice,
+    _gasLimit
   )
