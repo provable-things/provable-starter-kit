@@ -94,3 +94,11 @@ export const makeProvableQueryTransaction = (_crowdsaleContract, _address) =>
       ? alert('Transaction reverted!\nAre you sure the ethereum-bridge is up and listening?')
       : alert('Error when making transaction!:\n', _e)
   )
+
+export const makeInitializeCrowdsaleTransaction = (_crowdsaleContract, _address) =>
+  callFxnInContract(
+    _crowdsaleContract,
+    'initializeCrowdsale',
+    _address
+  )
+  .catch(_e => alert('Error when making transaction!:\n', _e))
