@@ -1,91 +1,29 @@
 import React from 'react'
-import { Button } from "rimble-ui"
 import styles from './Instructions.module.scss'
-import { getDefaultAddressFromGanacheAccounts } from '../../utils/utils.js'
+import { InitializeCrowdsaleButton } from '../ProvableCrowdsale/provable-crowdsale-buttons'
 
 export default _props =>
     <div className={styles.instructions}>
-      <h2> Your crowdsale contract is deployed! </h2>
+      <h2>Now your contract knows the price of ETH!</h2>
 
       <div className={styles.step}>
         <div className={styles.instruction}>
-          Next, you need to initialize it!
+          Now it's time to initialize your crowdsale! This function will first calculate the price per token in Wei making is so that each token costs $1. It uses the formula:
         </div>
         <div className={styles.code}>
           <code>
-            zos init
-          </code>
-        </div>
-        <div className={styles.instruction}>
-          Next, we need a token to play with. Add one to your project:
-        </div>
-        <div className={styles.code}>
-          <code>
-            zos add SimpleToken
-          </code>
-        </div>
-        <div className={styles.instruction}>
-          And also add the Provable Zeppelin Crowdsale contract too:
-        </div>
-        <div className={styles.code}>
-          <code>
-            zos add ProvableZeppelinCrowdsale
+            (1 ethInWei * 100 cents) / ethPriceInCents
           </code>
         </div>
       </div>
 
       <div className={styles.step}>
         <div className={styles.instruction}>
-          Now, connect with your local blockchain by opening a session:
+          Then it will set this price in the contract, and finally open the crowdsale up for people to purchase tokens from it! Go ahead and make the transactions to initialize your crowdsale:
         </div>
-        <div className={styles.code}>
-          <code>
-            zos session --network development --from {
-              getDefaultAddressFromGanacheAccounts(_props.ganacheAccounts)
-            } --expires 3600
-          </code>
-        </div>
-      </div>
-
-      <div className={styles.step}>
-        <div className={styles.instruction}>
-          Next, deploy the ProvableZeppelinCrowdsale & Token contracts to the blockchain:
-        </div>
-        <div className={styles.code}>
-          <code>
-            zos push --deploy-dependencies
-          </code>
-        </div>
-      </div>
-
-      <div className={styles.step}>
-        <div className={styles.instruction}>
-          Now to initialize the token contract and mint 1,000,000 tokens:
-        </div>
-        <div className={styles.code}>
-          <code>
-            zos create SimpleToken --init initialize --args ProvableZeppelinToken,PVT,0,1000000
-          </code>
-        </div>
-      </div>
-
-      <div className={styles.step}>
-        <div className={styles.instruction}>
-          Once the token is deployed, <b>zos</b> will show you the token-contract's address in the console. Copy that address and use it to initialize your crowdsale contract like so:
-        </div>
-        <div className={styles.code}>
-          <code>
-            zos create ProvableZeppelinCrowdsale --init initialize --args <b>PASTE-TOKEN-ADDRESS-HERE</b>
-          </code>
-        </div>
-      </div>
-
-      <div className={styles.step}>
-        <div className={styles.instruction}>
-          Congratulations! Your contracts should be deployed to the Ganache network! I reload this page to detect & interact with your contracts on the network!<br/><br/>
-          <Button onClick={ () => window.location.reload() }>
-            Reload
-          </Button>
-        </div>
-      </div>
+        <InitializeCrowdsaleButton
+          owner={_props.owner}
+          crowdsaleContract={_props.crowdsaleContract}
+        />
     </div>
+  </div>

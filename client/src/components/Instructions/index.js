@@ -10,4 +10,5 @@ export default _props =>
     { _props.instructionSet === 'noWeb3' && <Web3Instructions  /> }
     { _props.instructionSet === 'getEthPrice' && <GetEthPrice {..._props} /> }
     { _props.instructionSet === 'crowdsaleSetup' && <CrowdsaleSetup {..._props} /> }
+    { _props.instructionSet === 'initializeCrowdsale' && <InitializeCrowdsale {..._props} /> }
   </div>
