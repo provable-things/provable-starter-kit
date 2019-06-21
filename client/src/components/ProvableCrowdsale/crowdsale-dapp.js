@@ -58,7 +58,9 @@ export default class CrowdsaleDapp extends React.Component {
           ? <Instructions instructionSet='getEthPrice' { ...this.state }  />
           : !this.state.crowdsaleInitialized
           ? <Instructions instructionSet='initializeCrowdsale' { ...this.state }  />
-          : <p>asdf</p>
+          : this.state.totalWeiRaised === '0'
+          ? <Instructions instructionSet='buyAToken' { ...this.state }  />
+          : <p>Tutorial complete!</p>
       }
     </React.Fragment>
 }
