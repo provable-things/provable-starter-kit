@@ -10,22 +10,34 @@ This example shows you how to deploy a token and then a crowdsale contract that 
 
 ## :point_right: How to use:
 
+__Pre Flight Checks)__ You will need Node, NPM & a browser with Metamask installed!
+
 __1)__ First install Zos, Truffle & Ganache installed globally:
+
 __`❍ npm install -g truffle@5.0.2 ganache-cli@6.3.0 zos@2.3.0`__
 
-__2)__ Now unpack this zos kit:
-__`❍ zos unpack github.com/provable/provable-zeppelin-kit`__
+__2)__ Now unpack this zos kit (or just __`cd`__ into the directory if you've already cloned it):
 
-__3)__ Next, start up a local blockchain with Ganache:
+__`❍ zos unpack github.com/provable/provable-zeppelin-kit && cd ./provable-zeppelin-kit`__
+
+__3)__ Next, start up a local blockchain using Ganache via:
+
 __`❍ ganache-cli --secure -u 0 -u 1 -u 2 --deterministic`__
 
-__4)__ Then initialize your project:
+__4)__ Then in the root of the repo run the setup script:
+
+__`❍ npm run setup`__
+
+__5)__ Then use zos initialize your project:
+
 __`❍ zos init provable-zeppelin-tutorial`__
 
-__5)__ Now enter the client directory and run the React app:
+__6)__ Now enter the client directory and run the React app:
+
 __`❍ cd client && npm run start`__
 
-__6)__ Finally view the App and follow the instructions there by pointing your browser at:
+__7)__ Finally view the App and follow the instructions there by pointing your browser at:
+
 __`❍ http://localhost:3000`__
 
 ***
