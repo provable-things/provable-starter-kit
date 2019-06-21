@@ -4,6 +4,7 @@
   "description": "A ZeppelinOS example using Provable queries for data-rich smart-contracts!",
   "main": "index.js",
   "scripts": {
+    "setup": "npm i && cd client && npm i && cd ../ && npx truffle compile",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start-blank": "rm -rf client/src && cp -rf barebones/src client/"
   },
