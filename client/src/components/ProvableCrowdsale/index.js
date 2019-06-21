@@ -12,6 +12,9 @@ import React from 'react'
 import CrowdsaleDapp from './crowdsale-dapp'
 import StyledLoader from '../StyledLoader/index'
 import Instructions from '../Instructions/index'
+import styles from '../../App.module.scss'
+
+// TODO: Need to pass the contract through as props: crowdsaleContract
 
 export default class Provable extends React.Component {
 
@@ -72,14 +75,19 @@ export default class Provable extends React.Component {
       .then(_ => this.checkForCrowdsaleContract())
 
   componentWillUnmount = _ =>
-    this.clearWeb3PollTimeout()
+    this.state.web3PollTimeout &&
+    clearTimeout(this.state.web3PollTimeout)
 
   render = _ =>
-    this.state.web3 === undefined
-      ? <StyledLoader />
-      : this.state.web3 === null
-      ? <Instructions instructionSet='noWeb3' />
-      : this.state.crowdsaleContract === null
-      ? <Instructions instructionSet='provableCrowdsale' ganacheAccounts={this.state.ganacheAccounts} />
-      : <CrowdsaleDapp />
+    <div className={styles.wrapper}>
+      {
+        this.state.web3 === undefined
+        ? <StyledLoader />
+        : this.state.web3 === null
+        ? <Instructions instructionSet='noWeb3' />
+        : this.state.crowdsaleContract === null
+        ? <Instructions instructionSet='crowdsaleSetup' ganacheAccounts={this.state.ganacheAccounts} />
+        : <CrowdsaleDapp  { ...this.state } />
+      }
+    </div>
 }
