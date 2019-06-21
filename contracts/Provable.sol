@@ -6637,7 +6637,7 @@ contract usingOraclize {
     }
     /**
      *
-     * The following function has been written by Alex Beregszaszi (@ axic)
+     * The following function has been written by Alex Beregszaszi
      * Use it under the terms of the MIT license
      *
      */
@@ -6668,7 +6668,7 @@ contract usingOraclize {
     }
     /**
      *
-     * The following function has been written by Alex Beregszaszi (@ axic)
+     * The following function has been written by Alex Beregszaszi
      * Use it under the terms of the MIT license
      * It duplicates Solidity's ecrecover, but catching the CALL return value
      *
@@ -6707,7 +6707,7 @@ contract usingOraclize {
     }
     /**
      *
-     * The following function has been written by Alex Beregszaszi (@ axic), use it under the terms of the MIT license
+     * The following function has been written by Alex Beregszaszi, use it under the terms of the MIT license
      *
      */
     function ecrecovery(
