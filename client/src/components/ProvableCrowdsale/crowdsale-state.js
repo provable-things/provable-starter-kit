@@ -36,7 +36,7 @@ export default _props =>
       <div className={styles.datapoint}>
         <div className={styles.label}>
           Total Eth Raised: <b>{
-            convertWeiToEth(_props.totalWeiRaised, _props.web3)
+            `${convertWeiToEth(_props.totalWeiRaised, _props.web3)}`.slice(0, 7)
           } Ξ</b>
         </div>
       </div>
