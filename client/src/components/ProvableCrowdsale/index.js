@@ -14,8 +14,6 @@ import StyledLoader from '../StyledLoader/index'
 import Instructions from '../Instructions/index'
 import styles from '../../App.module.scss'
 
-// TODO: Need to pass the contract through as props: crowdsaleContract
-
 export default class Provable extends React.Component {
 
   state = {
@@ -23,7 +21,7 @@ export default class Provable extends React.Component {
     crowdsaleContract: null,
   }
 
-  pollForWeb3 = _ => // FIXME: Factor this out to just a pure fxn that recurses returning either web3 or null
+  pollForWeb3 = _ =>
     getNetworkIdFromWeb3(getGanacheWeb3())
       .then(_web3 =>
         !_web3
