@@ -55,9 +55,6 @@ export const getAllContractState = (_contract, _variableNames) =>
   Promise.all(_variableNames.map(getValueFromContract(_contract)))
 
 
-export const sliceAddressForDisplay = _address =>
-  _address && `${_address.slice(0, 10)}...`
-
 export const convertCentsToDollars = _cents => {
   const dollars = _cents / 100
   return dollars.toFixed(2)
@@ -68,3 +65,20 @@ export const convertWeiToEth = (_wei, _web3) =>
     ? _web3.utils.fromWei(`${_wei}`, 'ether')
     : 0
 
+export const callFxnInContract = (
+  _contract,
+  _fxnName,
+  _from,
+  _fxnParams = [],
+  _value = 0,
+  _gasPrice = 20e9,
+  _gasLimit = 2e5 // FIXME: This might need to be higher!
+) =>
+  _contract
+    .methods[_fxnName](..._fxnParams)
+    .send({
+      from: _from,
+      value: _value,
+      gas: _gasLimit,
+      gasPrice: _gasPrice
+    })
