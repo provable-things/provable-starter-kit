@@ -1,7 +1,5 @@
 import React from 'react'
-import { Button } from "rimble-ui"
 import styles from './Instructions.module.scss'
-import { getDefaultAddressFromGanacheAccounts } from '../../utils/utils.js'
 
 export default _props =>
   <div className={styles.instructions}>
