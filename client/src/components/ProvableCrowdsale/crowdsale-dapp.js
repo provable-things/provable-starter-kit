@@ -7,7 +7,6 @@ import React from 'react'
 import { assoc } from 'ramda'
 import CrowdsaleState from './crowdsale-state'
 import Instructions from '../Instructions/index'
-import { PublicAddress, Button } from 'rimble-ui'
 
 export default class CrowdsaleDapp extends React.Component {
 
@@ -56,8 +55,8 @@ export default class CrowdsaleDapp extends React.Component {
       <CrowdsaleState { ...this.state }/>
       {
         this.state.ethPriceInCents === '0'
-          ? <Instructions instructionSet='getEthPrice' />
-          : <p>Done!</p>
+          ? <Instructions instructionSet='getEthPrice' { ...this.state }  />
+          : <p> Done ! </p>
       }
     </React.Fragment>
 }

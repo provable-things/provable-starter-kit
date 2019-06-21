@@ -82,3 +82,15 @@ export const callFxnInContract = (
       gas: _gasLimit,
       gasPrice: _gasPrice
     })
+
+export const makeProvableQueryTransaction = (_crowdsaleContract, _address) =>
+  callFxnInContract(
+    _crowdsaleContract,
+    'getEthPriceViaProvable',
+    _address
+  )
+  .catch(_e =>
+    _e.message.includes('revert')
+      ? alert('Transaction reverted!\nAre you sure the ethereum-bridge is up and listening?')
+      : alert('Error when making transaction!:\n', _e)
+  )

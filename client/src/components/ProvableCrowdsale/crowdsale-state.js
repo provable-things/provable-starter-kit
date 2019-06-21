@@ -1,7 +1,6 @@
 import {
   convertWeiToEth,
   convertCentsToDollars,
-  CROWDSALE_CONTRACT_VARIABLE_NAMES
 } from '../../utils/utils'
 import React from 'react'
 import styles from './Crowdsale.module.scss'
