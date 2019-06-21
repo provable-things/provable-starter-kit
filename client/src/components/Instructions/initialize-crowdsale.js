@@ -4,13 +4,12 @@ import styles from './Instructions.module.scss'
 import { getDefaultAddressFromGanacheAccounts } from '../../utils/utils.js'
 
 export default _props =>
-  (
     <div className={styles.instructions}>
-      <h2> Build your first app with Provable & ZepKit </h2>
+      <h2> Your crowdsale contract is deployed! </h2>
 
       <div className={styles.step}>
         <div className={styles.instruction}>
-          First, ensure you have initiated your repo:
+          Next, you need to initialize it!
         </div>
         <div className={styles.code}>
           <code>
@@ -90,4 +89,3 @@ export default _props =>
         </div>
       </div>
     </div>
-  )
