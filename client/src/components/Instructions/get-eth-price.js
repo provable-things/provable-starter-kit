@@ -1,10 +1,6 @@
 import React from 'react'
-import { Button } from "rimble-ui"
 import styles from './Instructions.module.scss'
-import {
-  callFxnInContract,
-  getDefaultAddressFromGanacheAccounts
-} from '../../utils/utils.js'
+import { ProvableQueryButton } from '../ProvableCrowdsale/provable-crowdsale-buttons'
 
 export default _props =>
     <div className={styles.instructions}>
@@ -36,19 +32,9 @@ export default _props =>
         <div className={styles.instruction}>
           Once the bridge is ready, it's time to make our Provable query:
         </div>
-        <Button className={styles.button} onClick={
-          !_props.crowdsaleContract
-            ? alert('How have you made it here without a crowdsale contract being deployed‽')
-            : _ => callFxnInContract(
-              _props.crowdsaleContract,
-              'getEthPriceViaProvable',
-              _props.owner
-            )
-            .catch(_e => _e.message.includes('revert')
-              ? alert('Transaction reverted!\nAre you sure the ethereum-bridge is up and listening?')
-              : console.error('error making tx: ', _e))
-        }>
-          Make Provable Query
-        </Button>
+        <ProvableQueryButton
+          owner={_props.owner}
+          crowdsaleContract={_props.crowdsaleContract}
+        />
     </div>
   </div>
