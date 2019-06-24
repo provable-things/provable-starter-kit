@@ -1,8 +1,8 @@
 # :lock_with_ink_pen: Provable-Zeppelin
 
-A Provable & ZeppelinOS example showing you how to use Provable along with Zeppelin to create data-rich smart-contracts leveraging external APIs!
+A __Provable & ZeppelinOS__ collaboration showing you how to use __Provable__ alongside __ZeppelinOS__ in order to create data-rich smart-contracts leveraging external APIs!
 
-This example shows you how to deploy a token and then a crowdsale contract that fetches the price of ETH via a Provable query, before configuring & opening a crowdsale allowing you to sell your tokens for $1 each!
+This example shows you how to deploy a crowdsale contract which uses __Provable__ to discover the price of ETH in USD in order to correctly set a price for the token your crowdsale will be selling for $1 each!
 
 &nbsp;
 
@@ -20,7 +20,7 @@ __2)__ Now unpack this zos kit (or just __`cd`__ into the directory if you've al
 
 __`❍ zos unpack github.com/provable/provable-zeppelin-kit && cd ./provable-zeppelin-kit`__
 
-__3)__ Next, start up a local blockchain using Ganache via:
+__3)__ Next, fire up a _new_ terminal & start up a local blockchain instance with Ganache via:
 
 __`❍ ganache-cli --secure -u 0 -u 1 -u 2 --deterministic`__
 
@@ -36,15 +36,16 @@ __6)__ Now enter the client directory and run the React app:
 
 __`❍ cd client && npm run start`__
 
-__7)__ Finally view the App and follow the instructions there by pointing your browser at:
+__7)__ Once the React app is built you can view it on your localhost by pointing your browser at:
 
 __`❍ http://localhost:3000`__
 
-***
-
-## :page_with_curl:  _Run the example_
-
+__8)__ Now in your browser you should see that your Zepkit is up & running! Click on __`Provable Crowdsale`__ in the top right corner to begin creating the example dapp!
 <!-- TODO: Mention the need for an infura API key and the .env file! -->
+
+#### :computer: Happy Developing!
+
+&nbsp;
 
 ***
 
@@ -64,7 +65,7 @@ __`❍ npx truffle develop`__
 
 __`❍ npx ethereum-bridge -a 9 -H 127.0.0.1 -p 9545 --dev`__
 
-**4)** Once the bridge is ready & listening, go back to the first console with Truffle running & set the tests going!
+**4)** Once the bridge is ready & listening, go back to the first terminal where you have the Truffle development console running & set the tests going:
 
 __`❍ truffle(develop)> test`__
 
