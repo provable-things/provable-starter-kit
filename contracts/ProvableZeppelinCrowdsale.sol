@@ -29,9 +29,9 @@ contract ProvableZeppelinCrowdsale is usingOraclize, Initializable {
     );
 
     event TokensPurchased(
-        address indexed purchaser,
-        uint256 value,
-        uint256 amount
+        address indexed _purchaser,
+        uint256 _value,
+        uint256 _amount
     );
 
     function initialize(

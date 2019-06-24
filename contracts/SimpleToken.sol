@@ -13,8 +13,8 @@ contract SimpleToken is Initializable {
     mapping(address => uint256) public balanceOf;
 
     event Transfer(
-        address indexed from,
         address indexed _to,
+        address indexed _from,
         uint256 _numberOfTokens
     );
 
