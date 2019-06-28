@@ -31,7 +31,7 @@ contract SimpleToken is Initializable {
         symbol = _symbol;
         decimals  = _decimals;
         balanceOf[msg.sender] = _totalSupply;
-        _totalSupply = 1000000 * 10**uint256(decimals);
+        totalSupply = _totalSupply * 10 ** uint256(decimals);
         emit Transfer(address(0), msg.sender, _totalSupply);
     }
 
