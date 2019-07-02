@@ -30,7 +30,7 @@ __`❍ npm run setup`__
 
 __5)__ Then use zos initialize your project:
 
-__`❍ zos init provable-zeppelin-tutorial`__
+__`❍ npx zos init provable-zeppelin-tutorial`__
 
 __6)__ Now enter the client directory and run the React app:
 
