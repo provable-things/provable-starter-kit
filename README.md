@@ -14,7 +14,7 @@ __Pre Flight Checks)__ You will need Node, NPM & a browser with Metamask install
 
 __1)__ First install Zos, Truffle & Ganache installed globally:
 
-__`❍ npm install -g truffle@5.0.2 ganache-cli@6.3.0 zos@2.3.0`__
+__`❍ npm install -g truffle@5.0.2 ganache-cli@6.3.0 zos@2.4.0`__
 
 __2)__ Now unpack this zos kit (or just __`cd`__ into the directory if you've already cloned it):
 
