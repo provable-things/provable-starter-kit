@@ -20,7 +20,7 @@ __`❍ npm install -g truffle@5.0.2 ganache-cli@6.3.0 zos@2.4.0`__
 
 __2)__ Now unpack this zos kit (or just __`cd`__ into the directory if you've already cloned it):
 
-__`❍ zos unpack provable-things/provable-zep-kit && cd ./provable-zepkit`__
+__`❍ zos unpack provable-things/provable-zepkit && cd ./provable-zepkit`__
 
 __3)__ Next, fire up a _new_ terminal & start up a local blockchain instance with Ganache via:
 
