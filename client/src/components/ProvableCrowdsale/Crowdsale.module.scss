@@ -1,0 +1,56 @@
+@import '../../layout/variables.scss';
+
+.stateWrapper {
+  min-height: 60vh;
+  display: flex;
+  flex-flow: row nowrap;
+  align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.crowdsaleState {
+  margin: 20px;
+  padding: 40px 0;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 350px;
+  height: 400px;
+  padding: 40px 20px;
+  border: 1px solid #ccc;
+  box-shadow: 0px 2px 2px #ccc;
+
+  h3 {
+    border-bottom: 1px dotted #FFBE44;
+    padding-bottom: 5px;
+  }
+
+  .dataPoint {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: flex-start;
+    margin: 5px 0;
+    width: 100%;
+    justify-content: center;
+
+    .value {
+      font-weight: bold;
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+  }
+
+  .buttons {
+    display: flex;
+    width: 100%;
+    flex-flow: column nowrap;
+    align-items: center;
+    button {
+      margin: 5px 0;
+    }
+  }
+}

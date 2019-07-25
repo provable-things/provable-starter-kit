@@ -1,0 +1,12 @@
+/node_modules
+/.pnp
+.pnp.js
+/coverage
+/build
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.log*
+.zos.session
