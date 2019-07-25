@@ -1,8 +1,10 @@
 # :lock_with_ink_pen: Provable-Zeppelin
 
+&nbsp;
+
 A __Provable & ZeppelinOS__ collaboration showing you how to use __Provable__ alongside __ZeppelinOS__ in order to create data-rich smart-contracts leveraging external APIs!
 
-This example shows you how to deploy a crowdsale contract which uses __Provable__ to discover the price of ETH in USD in order to correctly set a price for the token your crowdsale will be selling for $1 each!
+This example shows you how to deploy a simple crowdsale contract which uses __Provable__ to discover the price of ETH in USD in order to correctly set the price for the tokens you're selling to $1!
 
 &nbsp;
 
@@ -18,7 +20,7 @@ __`❍ npm install -g truffle@5.0.2 ganache-cli@6.3.0 zos@2.4.0`__
 
 __2)__ Now unpack this zos kit (or just __`cd`__ into the directory if you've already cloned it):
 
-__`❍ zos unpack github.com/provable/provable-zeppelin-kit && cd ./provable-zeppelin-kit`__
+__`❍ zos unpack provable-things/provable-zep-kit && cd ./provable-zepkit`__
 
 __3)__ Next, fire up a _new_ terminal & start up a local blockchain instance with Ganache via:
 
@@ -30,7 +32,7 @@ __`❍ npm run setup`__
 
 __5)__ Then use zos initialize your project:
 
-__`❍ npx zos init provable-zeppelin-tutorial`__
+__`❍ npx zos init provable-zepkit-tutorial`__
 
 __6)__ Now enter the client directory and run the React app:
 
@@ -40,7 +42,7 @@ __7)__ Once the React app is built you can view it on your localhost by pointing
 
 __`❍ http://localhost:3000`__
 
-__8)__ Now in your browser you should see that your Zepkit is up & running! Click on __`Provable Crowdsale`__ in the top right corner to begin creating the example dapp!
+__9)__ Now in your browser you should see that your Zepkit is up & running! Click on __`Provable Crowdsale`__ in the top right corner to begin creating the example dapp!
 <!-- TODO: Mention the need for an infura API key and the .env file! -->
 
 #### :computer: Happy Developing!
@@ -69,7 +71,7 @@ __`❍ npx ethereum-bridge -a 9 -H 127.0.0.1 -p 9545 --dev`__
 
 __`❍ truffle(develop)> test`__
 
-```javascript
+```
 
   Contract: ❍ Provable Zeppelin Example
     ❍ Crowdsale Tests
