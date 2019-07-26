@@ -18,6 +18,6 @@
     "truffle-config.js"
   ],
   "hooks": { 
-      "post-unpack": ""
+      "post-unpack": "echo '✔ Done!'"
   }
 }
