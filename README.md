@@ -14,13 +14,13 @@ This example shows you how to deploy a simple crowdsale contract which uses __Pr
 
 __Pre Flight Checks)__ You will need Node, NPM & a browser with Metamask installed!
 
-__1)__ First install Zos, Truffle & Ganache installed globally:
+__1)__ First install the Open Zeppelin CLI, Truffle & Ganache globally:
 
-__`❍ npm install -g truffle@5.0.2 ganache-cli@6.3.0 zos@2.4.0`__
+__`❍ npm i -g @openzeppelin/cli@2.5.1 truffle@5.0.2 ganache-cli@6.3.0`__
 
-__2)__ Now unpack this zos kit (or just __`cd`__ into the directory if you've already cloned it):
+__2)__ Now unpack this starter kit (or just __`cd`__ into the directory if you've already cloned it):
 
-__`❍ zos unpack provable-things/provable-zep-kit && cd ./provable-zepkit`__
+__`❍ openzeppelin unpack provable-things/provable-starter-kit && cd ./provable-starter-kit`__
 
 __3)__ Next, fire up a _new_ terminal & start up a local blockchain instance with Ganache via:
 
@@ -30,9 +30,9 @@ __4)__ Then in the root of the repo run the setup script:
 
 __`❍ npm run setup`__
 
-__5)__ Then use zos initialize your project:
+__5)__ Then use the Open Zeppelin CLI initialize your project:
 
-__`❍ npx zos init provable-zepkit-tutorial`__
+__`❍ openzeppelin init provable-starter-kit`__
 
 __6)__ Now enter the client directory and run the React app:
 
@@ -42,8 +42,7 @@ __7)__ Once the React app is built you can view it on your localhost by pointing
 
 __`❍ http://localhost:3000`__
 
-__9)__ Now in your browser you should see that your Zepkit is up & running! Click on __`Provable Crowdsale`__ in the top right corner to begin creating the example dapp!
-<!-- TODO: Mention the need for an infura API key and the .env file! -->
+__9)__ Now in your browser you should see that your Provable Starter-kit is up & running! Click on __`Provable Crowdsale`__ in the top right corner to begin creating the example dapp!
 
 #### :computer: Happy Developing!
 
@@ -51,7 +50,7 @@ __9)__ Now in your browser you should see that your Zepkit is up & running! Clic
 
 ***
 
-## :page_with_curl:  _Test Instructions_
+## :page_with_curl:  _Smart-Contract Test Instructions_
 
 In order to run the smart-contract tests you will need to use the __`ethereum-bridge`__ to provide a way for the Provable service to listen to events from your locally-based smart-contract(s). To get it up and running:
 

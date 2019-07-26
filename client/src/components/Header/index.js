@@ -10,7 +10,7 @@ export default _ =>
       </div>
       <ul>
         <li><a href="/" className={styles.link}> Home</a></li>
-        <li><a href="/provable" className={styles.link}>Provable Crowdsale Zepkit</a></li>
+        <li><a href="/provable" className={styles.link}>Provable Crowdsale Starter Kit</a></li>
       </ul>
     </nav>
   </div>

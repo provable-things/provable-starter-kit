@@ -8,7 +8,8 @@ export default _props =>
 
       <div className={styles.step}>
         <div className={styles.instruction}>
-          Now it's time to use Provable to get an ETH price in USD for our contract! First, fire up a new terminal and start the ethereum-bridge:
+          Now it's time to use Provable to get an ETH price in USD for our contract! <br/><br/>
+          First, fire up a new terminal and start the ethereum-bridge:
         </div>
         <div className={styles.code}>
           <code>
