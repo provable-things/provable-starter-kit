@@ -18,9 +18,9 @@ __1)__ First install the Open Zeppelin CLI, Truffle & Ganache globally:
 
 __`❍ npm i -g @openzeppelin/cli@2.5.1 truffle@5.0.2 ganache-cli@6.3.0`__
 
-__2)__ Now unpack this starter kit (or just __`cd`__ into the directory if you've already cloned it):
+__2)__ Now unpack this starter kit in an empty directory:
 
-__`❍ openzeppelin unpack provable-things/provable-starter-kit && cd ./provable-starter-kit`__
+__`❍ openzeppelin unpack provable-things/provable-starter-kit`__
 
 __3)__ Next, fire up a _new_ terminal & start up a local blockchain instance with Ganache via:
 

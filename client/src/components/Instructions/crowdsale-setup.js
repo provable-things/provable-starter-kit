@@ -70,7 +70,7 @@ export default _props =>
 
       <div className={styles.step}>
         <div className={styles.instruction}>
-          Once the token is deployed, the <b>Openzeppelin CLI</b> will show you the token-contract's address in the console. Copy that address and use it to initialize your crowdsale contract like so:
+          Once the token is deployed, the <b>OpenZeppelin CLI</b> will show you the token-contract's address in the console. Copy that address and use it to initialize your crowdsale contract like so:
         </div>
         <div className={styles.code}>
           <code>
