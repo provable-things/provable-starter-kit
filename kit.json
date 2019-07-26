@@ -1,6 +1,6 @@
 {
   "manifestVersion": "0.1.0",
-  "message": "\nQuick Start\nRun your local blockchain:\n> ganache-cli --secure -u 0 -u 1 -u 2 --deterministic\nInitialize the Provable Open Zeppelin starter-kit:\n> openzeppelin init provable-starter-kit\nGo to the client directory:\n> cd client\nRun the app:\n> npm run start\nContinue in your browser!\nMore at https://provable.xyz & https://openzeppelin.com/",
+  "message": "✔ Your Provable Starter Kit is unpacked & ready to go!\n✔ Open the README.md to get started!",
   "files": [
     "test",
     "client",
@@ -18,6 +18,6 @@
     "truffle-config.js"
   ],
   "hooks": { 
-      "post-unpack": "echo '✔ Your Provable Starter Kit is unpacked & ready to go!'"
+      "post-unpack": ""
   }
 }
