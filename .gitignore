@@ -7,3 +7,4 @@
 .zos.session
 zos.json
 zos.dev*.json
+.openzeppelin/.session
