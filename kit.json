@@ -8,6 +8,7 @@
     "kit.json",
     "barebones",
     "contracts",
+    "README.md",
     ".gitignore",
     "migrations",
     ".eslintrc.js",
@@ -15,8 +16,5 @@
     ".eslintignore",
     ".solhint.json",
     "truffle-config.js"
-  ],
-  "hooks": {
-    "post-unpack": "npm install && cd client && npm install"
-  }
+  ]
 }
