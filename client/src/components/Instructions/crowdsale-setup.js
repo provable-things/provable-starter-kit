@@ -13,7 +13,7 @@ export default _props =>
         </div>
         <div className={styles.code}>
           <code>
-            zos init
+            openzeppelin init
           </code>
         </div>
         <div className={styles.instruction}>
@@ -21,7 +21,7 @@ export default _props =>
         </div>
         <div className={styles.code}>
           <code>
-            zos add SimpleToken
+            openzeppelin add SimpleToken
           </code>
         </div>
         <div className={styles.instruction}>
@@ -29,7 +29,7 @@ export default _props =>
         </div>
         <div className={styles.code}>
           <code>
-            zos add ProvableZeppelinCrowdsale
+            openzeppelin add ProvableZeppelinCrowdsale
           </code>
         </div>
       </div>
@@ -40,7 +40,7 @@ export default _props =>
         </div>
         <div className={styles.code}>
           <code>
-            zos session --network development --from {
+            openzeppelin session --network development --from {
               getDefaultAddressFromGanacheAccounts(_props.ganacheAccounts)
             } --expires 3600
           </code>
@@ -53,7 +53,7 @@ export default _props =>
         </div>
         <div className={styles.code}>
           <code>
-            zos push --deploy-dependencies
+            openzeppelin push --deploy-dependencies
           </code>
         </div>
       </div>
@@ -64,18 +64,18 @@ export default _props =>
         </div>
         <div className={styles.code}>
           <code>
-            zos create SimpleToken --init initialize --args ProvableZeppelinToken,PVT,0,1000000
+            openzeppelin create SimpleToken --init initialize --args ProvableZeppelinToken,PVT,0,1000000
           </code>
         </div>
       </div>
 
       <div className={styles.step}>
         <div className={styles.instruction}>
-          Once the token is deployed, <b>zos</b> will show you the token-contract's address in the console. Copy that address and use it to initialize your crowdsale contract like so:
+          Once the token is deployed, the <b>Openzeppelin CLI</b> will show you the token-contract's address in the console. Copy that address and use it to initialize your crowdsale contract like so:
         </div>
         <div className={styles.code}>
           <code>
-            zos create ProvableZeppelinCrowdsale --init initialize --args <b>PASTE-TOKEN-ADDRESS-HERE</b>
+            openzeppelin create ProvableZeppelinCrowdsale --init initialize --args <b>PASTE-TOKEN-ADDRESS-HERE</b>
           </code>
         </div>
       </div>
