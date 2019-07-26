@@ -11,9 +11,7 @@
     "README.md",
     ".gitignore",
     "migrations",
-    ".eslintrc.js",
     "package.json",
-    ".eslintignore",
     ".solhint.json",
     "truffle-config.js"
   ],
