@@ -16,5 +16,8 @@
     ".eslintignore",
     ".solhint.json",
     "truffle-config.js"
-  ]
+  ],
+  "hooks": { 
+      "post-unpack": "echo '✔ Your Provable Starter Kit is unpacked & ready to go!'"
+  }
 }
