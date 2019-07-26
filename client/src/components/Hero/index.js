@@ -18,7 +18,7 @@ export default class Hero extends Component {
       <div className={styles.Hero}>
         <div className={styles.hwrapper}>
           <div className={styles.left}>
-            <h1> Welcome to ZepKit! </h1>
+            <h1>Welcome to the Provable Starter Kit!</h1>
             <h2>
               The easiest way to build a Web3 application with the
               most trusted tools in Ethereum.
@@ -28,19 +28,19 @@ export default class Hero extends Component {
                 - Includes <a
                   target="_blank"
                   rel="noopener noreferrer"
-                  href="https://openzeppelin.org/">OpenZeppelin</a> as an EVM package.
-              </div>
-              <div className={styles.feature}>
-                - Upgradeable smart contracts with <a
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href="https://zeppelinos.org/">ZeppelinOS</a>.
+                  href="https://provable.xyz/">Provable Things</a> oracle for external data.
               </div>
               <div className={styles.feature}>
                 - Includes <a
                   target="_blank"
                   rel="noopener noreferrer"
-                  href="https://provable.xyz/">Provable Things</a> oracle for external data.
+                  href="https://openzeppelin.org/">OpenZeppelin</a> as an EVM package.
+              </div>
+              <div className={styles.feature}>
+                - Upgradeable smart contracts with the <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href="https://openzeppelin.com/">Open Zeppelin CLI</a>.
               </div>
               <div className={styles.feature}>
                 - Includes <a
